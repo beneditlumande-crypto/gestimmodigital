@@ -148,9 +148,10 @@ const Contact = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors"
+                  disabled={submitting}
+                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-60"
                 >
-                  Envoyer le message
+                  {submitting ? "Envoi en cours..." : "Envoyer le message"}
                 </button>
               </form>
             </div>
