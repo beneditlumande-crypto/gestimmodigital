@@ -3,13 +3,31 @@ import Footer from "@/components/Footer";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || null,
+      message: form.message,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({
+        title: "Erreur",
+        description: "Impossible d'envoyer le message. Réessayez.",
+        variant: "destructive",
+      });
+      return;
+    }
     toast({
       title: "Message envoyé !",
       description: "Nous vous répondrons dans les plus brefs délais.",
@@ -59,13 +77,13 @@ const Contact = () => {
                     <p className="text-muted-foreground text-sm">+243 82 97 91 356</p>
                   </div>
                 </a>
-                <a href="mailto:contact@gestimmodigital.com" className="flex items-start gap-4 group">
+                <a href="mailto:beneditlumande@gmail.com" className="flex items-start gap-4 group">
                   <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
                     <Mail size={20} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">Email</p>
-                    <p className="text-muted-foreground text-sm">contact@gestimmodigital.com</p>
+                    <p className="text-muted-foreground text-sm">beneditlumande@gmail.com</p>
                   </div>
                 </a>
                 <div className="flex items-start gap-4">
@@ -130,9 +148,10 @@ const Contact = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors"
+                  disabled={submitting}
+                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-60"
                 >
-                  Envoyer le message
+                  {submitting ? "Envoi en cours..." : "Envoyer le message"}
                 </button>
               </form>
             </div>
