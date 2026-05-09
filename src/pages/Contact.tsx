@@ -125,6 +125,7 @@ const Contact = () => {
                   <input
                     type="text"
                     required
+                    maxLength={100}
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -136,6 +137,7 @@ const Contact = () => {
                   <input
                     type="email"
                     required
+                    maxLength={255}
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -146,6 +148,7 @@ const Contact = () => {
                   <label className="text-sm font-medium text-foreground mb-1 block">Téléphone</label>
                   <input
                     type="tel"
+                    maxLength={30}
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -157,6 +160,7 @@ const Contact = () => {
                   <textarea
                     required
                     rows={4}
+                    maxLength={2000}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
