@@ -2,8 +2,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Le nom est requis").max(100, "Le nom doit faire moins de 100 caractères"),
+  email: z.string().trim().email("Email invalide").max(255, "Email trop long"),
+  phone: z.string().trim().max(30, "Téléphone trop long").optional().or(z.literal("")),
+  message: z.string().trim().min(1, "Le message est requis").max(2000, "Le message doit faire moins de 2000 caractères"),
+});
 
 const Contact = () => {
   const { toast } = useToast();
@@ -12,12 +20,21 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsed = contactSchema.safeParse(form);
+    if (!parsed.success) {
+      toast({
+        title: "Validation",
+        description: parsed.error.issues[0]?.message ?? "Données invalides",
+        variant: "destructive",
+      });
+      return;
+    }
     setSubmitting(true);
     const { error } = await supabase.from("contact_messages").insert({
-      name: form.name,
-      email: form.email,
-      phone: form.phone || null,
-      message: form.message,
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone ? parsed.data.phone : null,
+      message: parsed.data.message,
     });
     setSubmitting(false);
     if (error) {
@@ -108,6 +125,7 @@ const Contact = () => {
                   <input
                     type="text"
                     required
+                    maxLength={100}
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -119,6 +137,7 @@ const Contact = () => {
                   <input
                     type="email"
                     required
+                    maxLength={255}
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -129,6 +148,7 @@ const Contact = () => {
                   <label className="text-sm font-medium text-foreground mb-1 block">Téléphone</label>
                   <input
                     type="tel"
+                    maxLength={30}
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -140,6 +160,7 @@ const Contact = () => {
                   <textarea
                     required
                     rows={4}
+                    maxLength={2000}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
