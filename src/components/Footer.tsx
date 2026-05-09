@@ -39,8 +39,8 @@ const Footer = () => (
             <a href="tel:+243829791356" className="flex items-center gap-2 hover:text-primary transition-colors">
               <Phone size={16} /> +243 82 97 91 356
             </a>
-            <a href="mailto:contact@gestimmodigital.com" className="flex items-center gap-2 hover:text-primary transition-colors">
-              <Mail size={16} /> contact@gestimmodigital.com
+            <a href="mailto:beneditlumande@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+              <Mail size={16} /> beneditlumande@gmail.com
             </a>
             <span className="flex items-center gap-2">
               <MapPin size={16} /> Kinshasa, RDC
