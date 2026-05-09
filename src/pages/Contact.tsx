@@ -3,13 +3,31 @@ import Footer from "@/components/Footer";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || null,
+      message: form.message,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({
+        title: "Erreur",
+        description: "Impossible d'envoyer le message. Réessayez.",
+        variant: "destructive",
+      });
+      return;
+    }
     toast({
       title: "Message envoyé !",
       description: "Nous vous répondrons dans les plus brefs délais.",
