@@ -32,7 +32,7 @@ const services = [
     icon: TrendingUp,
     title: "Marketing Digital pour Entreprises",
     description:
-      "Stratégies de marketing digital sur mesure : réseaux sociaux, SEO, publicité en ligne, branding — nous boostons la visibilité et la croissance de votre entreprise.",
+      "Développez votre visibilité en ligne grâce à des stratégies digitales efficaces : réseaux sociaux, publicité Facebook & Google Ads, branding et acquisition de clients.",
   },
 ];
 

@@ -14,6 +14,7 @@ export const VersionChecker = () => {
     if (!currentVersion) return;
 
     const checkVersion = async () => {
+      if (typeof navigator !== "undefined" && !navigator.onLine) return;
       try {
         const res = await fetch(`/?v=${Date.now()}`, {
           cache: "no-store",
@@ -25,23 +26,39 @@ export const VersionChecker = () => {
         );
         const remoteVersion = match?.[1];
         if (remoteVersion && remoteVersion !== currentVersion) {
-          window.location.reload();
+          // Force true reload bypassing cache on mobile
+          window.location.reload(true as any);
         }
       } catch {
         // silent fail
       }
     };
 
-    // Check on load, on tab focus, and every 5 minutes
+    // Check immediately on mount
     checkVersion();
+
+    // Check when tab regains focus
     const onFocus = () => checkVersion();
     window.addEventListener("focus", onFocus);
-    document.addEventListener("visibilitychange", onFocus);
-    const interval = window.setInterval(checkVersion, 5 * 60 * 1000);
+
+    // Check when page becomes visible (mobile background -> foreground)
+    const onVis = () => {
+      if (document.visibilityState === "visible") checkVersion();
+    };
+    document.addEventListener("visibilitychange", onVis);
+
+    // Check on pageshow (mobile back/forward cache)
+    const onPageShow = () => checkVersion();
+    window.addEventListener("pageshow", onPageShow);
+
+    // Poll more aggressively on mobile (every 1 min) vs desktop (every 5 min)
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const interval = window.setInterval(checkVersion, isMobile ? 60_000 : 5 * 60_000);
 
     return () => {
       window.removeEventListener("focus", onFocus);
-      document.removeEventListener("visibilitychange", onFocus);
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("pageshow", onPageShow);
       window.clearInterval(interval);
     };
   }, []);
