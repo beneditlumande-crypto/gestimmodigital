@@ -26,8 +26,8 @@ export const VersionChecker = () => {
         );
         const remoteVersion = match?.[1];
         if (remoteVersion && remoteVersion !== currentVersion) {
-          // Force true reload bypassing cache on mobile
-          window.location.reload(true as any);
+          // Force reload bypassing cache on mobile
+          window.location.href = window.location.href.split("?")[0] + "?nocache=" + Date.now();
         }
       } catch {
         // silent fail
