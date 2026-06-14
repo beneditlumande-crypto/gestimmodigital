@@ -17,8 +17,9 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border shadow-sm">
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="font-display text-xl font-bold text-primary">
-          Gestimmo <span className="text-foreground">Digital</span>
+        <Link to="/" className="font-display text-xl font-bold text-primary flex flex-col leading-none">
+          <span>Gestimmo <span className="text-foreground">Digital</span></span>
+          <span className="text-[10px] font-normal text-muted-foreground tracking-wide mt-0.5">Benedit</span>
         </Link>
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (

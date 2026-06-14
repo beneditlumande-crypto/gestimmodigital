@@ -6,9 +6,10 @@ const Footer = () => (
     <div className="container px-4">
       <div className="grid md:grid-cols-4 gap-10">
         <div>
-          <h3 className="font-display text-xl font-bold mb-4">
+          <h3 className="font-display text-xl font-bold mb-1">
             Gestimmo <span className="text-primary">Digital</span>
           </h3>
+          <p className="text-xs opacity-60 mb-4">Benedit</p>
           <p className="text-sm opacity-70 leading-relaxed">
             Votre partenaire de confiance en immobilier et marketing digital à Kinshasa.
           </p>
