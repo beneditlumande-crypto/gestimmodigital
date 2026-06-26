@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Building2, Home, Globe, TrendingUp, ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 const services = [
   {
@@ -36,17 +37,16 @@ const ServicesPreview = () => {
           <div className="w-16 h-1 bg-primary mx-auto mt-4 rounded-full" />
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className="bg-card rounded-xl p-6 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
-            >
-              <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                <s.icon size={24} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+          {services.map((s, i) => (
+            <Reveal key={s.title} delay={i * 100}>
+              <div className="bg-card rounded-xl p-6 border border-border hover:border-primary/40 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group h-full">
+                <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <s.icon size={24} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+                </div>
+                <h3 className="font-display font-semibold text-foreground mb-2">{s.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
               </div>
-              <h3 className="font-display font-semibold text-foreground mb-2">{s.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
         <div className="text-center mt-10">
