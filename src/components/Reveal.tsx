@@ -4,11 +4,10 @@ interface RevealProps {
   children: ReactNode;
   delay?: number;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
 }
 
-const Reveal = ({ children, delay = 0, className = "", as: Tag = "div" }: RevealProps) => {
-  const ref = useRef<HTMLElement | null>(null);
+const Reveal = ({ children, delay = 0, className = "" }: RevealProps) => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -30,8 +29,7 @@ const Reveal = ({ children, delay = 0, className = "", as: Tag = "div" }: Reveal
   }, []);
 
   return (
-    // @ts-expect-error dynamic tag
-    <Tag
+    <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
       className={`transition-all duration-700 ease-out ${
@@ -39,7 +37,7 @@ const Reveal = ({ children, delay = 0, className = "", as: Tag = "div" }: Reveal
       } ${className}`}
     >
       {children}
-    </Tag>
+    </div>
   );
 };
 
