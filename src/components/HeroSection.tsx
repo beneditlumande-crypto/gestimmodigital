@@ -9,10 +9,11 @@ const HeroSection = () => {
         <img
           src={heroImg}
           alt="Gestimmo Digital - Immobilier à Kinshasa"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-110 animate-fade-in"
+          style={{ animation: "fade-in 1.2s ease-out forwards, float 12s ease-in-out infinite 1.2s" }}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-dark/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-dark/80 via-dark/60 to-primary/40" />
       </div>
       <div className="relative z-10 container text-center px-4">
         <p className="text-primary font-body font-medium tracking-widest uppercase text-sm mb-4 animate-fade-in-up">
@@ -28,13 +29,13 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-lg font-body font-semibold text-sm hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-lg font-body font-semibold text-sm hover:bg-primary/90 transition-all hover:scale-105 hover:gap-3 animate-pulse-glow"
           >
-            Nous contacter <ArrowRight size={18} />
+            Nous contacter <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
             to="/biens"
-            className="inline-flex items-center gap-2 border border-dark-foreground/30 text-dark-foreground px-8 py-3 rounded-lg font-body font-semibold text-sm hover:bg-dark-foreground/10 transition-colors"
+            className="inline-flex items-center gap-2 border border-dark-foreground/30 text-dark-foreground px-8 py-3 rounded-lg font-body font-semibold text-sm hover:bg-dark-foreground/10 hover:scale-105 transition-all"
           >
             Voir nos biens
           </Link>

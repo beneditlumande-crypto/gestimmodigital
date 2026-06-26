@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 const testimonials = [
   {
@@ -33,24 +34,23 @@ const TestimonialsSection = () => {
           <div className="w-16 h-1 bg-primary mx-auto mt-4 rounded-full" />
         </div>
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {testimonials.map((t) => (
-            <div
-              key={t.name}
-              className="bg-card rounded-xl p-6 border border-border shadow-sm"
-            >
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} size={16} className="fill-primary text-primary" />
-                ))}
+          {testimonials.map((t, i) => (
+            <Reveal key={t.name} delay={i * 150}>
+              <div className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: t.rating }).map((_, j) => (
+                    <Star key={j} size={16} className="fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 italic">
+                  "{t.text}"
+                </p>
+                <div>
+                  <p className="font-display font-semibold text-foreground text-sm">{t.name}</p>
+                  <p className="text-muted-foreground text-xs">{t.role}</p>
+                </div>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4 italic">
-                "{t.text}"
-              </p>
-              <div>
-                <p className="font-display font-semibold text-foreground text-sm">{t.name}</p>
-                <p className="text-muted-foreground text-xs">{t.role}</p>
-              </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
