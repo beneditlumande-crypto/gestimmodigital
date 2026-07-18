@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "gestimmo-digital-mcp",
+      "version": "0.1.0",
+      "title": "Gestimmo Digital MCP"
+    },
+    "tools": [
+      {
+        "name": "list_properties",
+        "title": "Lister les biens immobiliers",
+        "description": "Retourne les biens immobiliers Gestimmo Digital à Kinshasa (villas, appartements, bureaux, terrains). Filtres optionnels par type (Vente/Location) et par commune.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Vente",
+                "Location"
+              ],
+              "description": "Filtrer par type: Vente ou Location."
+            },
+            "location": {
+              "type": "string",
+              "description": "Filtrer par commune de Kinshasa (ex: Gombe, Ngaliema)."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_property",
+        "title": "Détails d'un bien",
+        "description": "Retourne les détails complets d'un bien immobilier par son id.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Identifiant du bien (ex: villa-gombe-piscine)."
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_agency_info",
+        "title": "Informations sur l'agence",
+        "description": "Retourne les informations générales sur Gestimmo Digital : services, coordonnées, zone d'activité.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "send_contact_message",
+        "title": "Envoyer un message de contact",
+        "description": "Envoie un message via le formulaire de contact Gestimmo Digital. Les messages reçus ne sont PAS lisibles via MCP.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "description": "Nom complet de la personne."
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "maxLength": 255,
+              "description": "Adresse email de contact."
+            },
+            "phone": {
+              "type": "string",
+              "maxLength": 30,
+              "description": "Téléphone (optionnel)."
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000,
+              "description": "Contenu du message."
+            }
+          },
+          "required": [
+            "name",
+            "email",
+            "message"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
