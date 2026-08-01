@@ -140,7 +140,7 @@ var get_agency_info_default = defineTool3({
       nom: "Gestimmo Digital",
       responsable: "Benedit",
       ville: "Kinshasa, R\xE9publique D\xE9mocratique du Congo",
-      email: "beneditlumande@gmail.com",
+      email: "contact.gestimmodigital@gmail.com",
       whatsapp: "+243 82 97 91 356",
       services: [
         "Vente et location de biens immobiliers \xE0 Kinshasa",
