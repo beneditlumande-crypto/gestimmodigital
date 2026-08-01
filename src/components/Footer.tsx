@@ -32,6 +32,10 @@ const Footer = () => (
             <span>Promotion immobilière</span>
             <span>Création de sites web</span>
             <span>Marketing digital</span>
+            <span>Analyse de données</span>
+            <span>Automatisation & IA</span>
+            <span>Référencement SEO</span>
+            <span>Applications web & API</span>
           </div>
         </div>
         <div>
