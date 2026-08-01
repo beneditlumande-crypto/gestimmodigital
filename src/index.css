@@ -70,3 +70,14 @@
     background-image: linear-gradient(135deg, hsl(217, 91%, 50%), hsl(217, 91%, 70%));
   }
 }
+
+/* Masquer le badge "Edit with Lovable" injecté sur le site publié */
+a[href*="lovable.app"],
+.lovable-badge,
+[class*="lovable-badge"],
+[id*="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
