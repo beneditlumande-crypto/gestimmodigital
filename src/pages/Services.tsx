@@ -1,7 +1,21 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { Building2, Home, Landmark, Globe, TrendingUp, ArrowRight } from "lucide-react";
+import {
+  Building2,
+  Home,
+  Landmark,
+  Globe,
+  TrendingUp,
+  ArrowRight,
+  BarChart3,
+  Workflow,
+  Bot,
+  Search,
+  CreditCard,
+  Plug,
+  LayoutDashboard,
+} from "lucide-react";
 
 const services = [
   {
@@ -33,6 +47,48 @@ const services = [
     title: "Marketing Digital pour Entreprises",
     description:
       "Développez votre visibilité en ligne grâce à des stratégies digitales efficaces : réseaux sociaux, publicité Facebook & Google Ads, branding et acquisition de clients.",
+  },
+  {
+    icon: BarChart3,
+    title: "Analyse de Données",
+    description:
+      "Transformez vos données en informations stratégiques grâce à des tableaux de bord interactifs, des rapports Power BI, Excel et Business Intelligence.",
+  },
+  {
+    icon: Workflow,
+    title: "Automatisation des Processus",
+    description:
+      "Automatisez les tâches répétitives de votre entreprise : WhatsApp, formulaires, e-mails, notifications, CRM et workflows afin de gagner du temps et d'améliorer votre productivité.",
+  },
+  {
+    icon: Bot,
+    title: "Intelligence Artificielle & Agents IA",
+    description:
+      "Nous développons des agents IA, chatbots intelligents et assistants virtuels capables d'automatiser le service client, les ventes, les réponses automatiques et les processus métier.",
+  },
+  {
+    icon: Search,
+    title: "Référencement SEO",
+    description:
+      "Optimisation complète de votre site web afin d'améliorer son positionnement sur Google, d'augmenter votre visibilité et d'attirer davantage de clients.",
+  },
+  {
+    icon: CreditCard,
+    title: "Intégration de Solutions de Paiement",
+    description:
+      "Intégration des moyens de paiement en ligne tels que M-Pesa, Airtel Money, Orange Money, Visa, Mastercard et autres solutions adaptées à votre activité.",
+  },
+  {
+    icon: Plug,
+    title: "Intégration d'API",
+    description:
+      "Connexion de votre application avec des services externes : SMS, e-mails, paiements, Google Maps, WhatsApp Business, ERP, CRM et autres API.",
+  },
+  {
+    icon: LayoutDashboard,
+    title: "Développement d'Applications Web",
+    description:
+      "Création d'applications web modernes, rapides et sécurisées pour les entreprises, commerces, écoles, agences immobilières et startups.",
   },
 ];
 
