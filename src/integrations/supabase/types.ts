@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      biens: {
+        Row: {
+          commune: string | null
+          created_at: string | null
+          id: string
+          prix: number | null
+          titre: string | null
+        }
+        Insert: {
+          commune?: string | null
+          created_at?: string | null
+          id?: string
+          prix?: number | null
+          titre?: string | null
+        }
+        Update: {
+          commune?: string | null
+          created_at?: string | null
+          id?: string
+          prix?: number | null
+          titre?: string | null
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
