@@ -30,24 +30,29 @@ const Contact = () => {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from("contact_messages").insert({
-      name: parsed.data.name,
-      email: parsed.data.email,
-      phone: parsed.data.phone ? parsed.data.phone : null,
-      message: parsed.data.message,
+    const { error } = await supabase.functions.invoke("send-contact-notification", {
+      body: {
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone ?? "",
+        message: parsed.data.message,
+      },
     });
     setSubmitting(false);
     if (error) {
+      console.error("send-contact-notification failed:", error);
       toast({
-        title: "Erreur",
-        description: "Impossible d'envoyer le message. Réessayez.",
+        title: "Envoi impossible",
+        description:
+          "Une erreur est survenue lors de l'envoi de votre message. Merci de réessayer dans quelques instants ou de nous contacter via WhatsApp.",
         variant: "destructive",
       });
       return;
     }
     toast({
-      title: "Message envoyé !",
-      description: "Nous vous répondrons dans les plus brefs délais.",
+      title: "Merci !",
+      description:
+        "Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.",
     });
     setForm({ name: "", email: "", phone: "", message: "" });
   };
