@@ -21,7 +21,10 @@ const Footer = () => (
             <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
             <Link to="/biens" className="hover:text-primary transition-colors">Biens</Link>
             <Link to="/a-propos" className="hover:text-primary transition-colors">À Propos</Link>
+            <Link to="/devis" className="hover:text-primary transition-colors">Devis</Link>
+            <Link to="/rendez-vous" className="hover:text-primary transition-colors">Rendez-vous</Link>
             <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
+
           </div>
         </div>
         <div>
