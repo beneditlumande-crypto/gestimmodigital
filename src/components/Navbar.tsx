@@ -6,9 +6,12 @@ const navItems = [
   { label: "Accueil", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Biens", href: "/biens" },
+  { label: "Devis", href: "/devis" },
+  { label: "Rendez-vous", href: "/rendez-vous" },
   { label: "À Propos", href: "/a-propos" },
   { label: "Contact", href: "/contact" },
 ];
+
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +24,7 @@ const Navbar = () => {
           <span>Gestimmo <span className="text-foreground">Digital</span></span>
           <span className="text-[10px] font-normal text-muted-foreground tracking-wide mt-0.5">Benedit</span>
         </Link>
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
             <Link
               key={item.href}
