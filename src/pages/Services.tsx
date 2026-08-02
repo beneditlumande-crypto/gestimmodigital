@@ -131,7 +131,54 @@ const Services = () => {
               Gestimmo Digital combine expertise immobilière et savoir-faire digital pour offrir des solutions complètes à ses clients.
             </p>
           </div>
+
+          <Reveal>
+            <div className="max-w-6xl mx-auto mb-14 bg-card rounded-xl p-8 md:p-10 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+              <div className="flex flex-col md:flex-row md:items-start gap-6">
+                <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
+                  <Target size={28} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <h2 className="font-display font-bold text-foreground text-xl">Conseil stratégique</h2>
+                    <span className="text-xs font-semibold bg-accent text-accent-foreground px-3 py-1 rounded-full">
+                      À partir de 200 USD
+                    </span>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    Nous accompagnons les entreprises, entrepreneurs, investisseurs et organisations dans l'analyse de
+                    leurs défis, la définition de leurs objectifs et la mise en place de stratégies efficaces pour
+                    accélérer leur croissance et améliorer leurs performances.
+                  </p>
+                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 mb-8">
+                    {strategyItems.map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Check size={16} className="text-primary shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Link
+                      to="/devis"
+                      className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors"
+                    >
+                      <FileText size={18} /> Demander un devis
+                    </Link>
+                    <Link
+                      to="/rendez-vous"
+                      className="inline-flex items-center justify-center gap-2 border border-primary text-primary px-6 py-3 rounded-lg font-semibold text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                    >
+                      <CalendarClock size={18} /> Prendre rendez-vous
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
             {services.map((s) => (
               <div
                 key={s.title}
