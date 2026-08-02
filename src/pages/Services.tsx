@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
 import { Link } from "react-router-dom";
 import {
   Building2,
@@ -15,9 +16,31 @@ import {
   CreditCard,
   Plug,
   LayoutDashboard,
+  Target,
+  Check,
+  CalendarClock,
+  FileText,
 } from "lucide-react";
 
+const strategyItems = [
+  "Élaboration de stratégie d'entreprise",
+  "Stratégie marketing",
+  "Stratégie digitale",
+  "Stratégie commerciale",
+  "Stratégie de vente",
+  "Développement d'entreprise",
+  "Positionnement et image de marque (Branding)",
+  "Stratégie immobilière",
+  "Étude de faisabilité de projet",
+  "Plan d'affaires (Business Plan)",
+  "Transformation numérique",
+  "Automatisation des processus",
+  "Optimisation des performances de l'entreprise",
+  "Coaching et accompagnement stratégique des dirigeants",
+];
+
 const services = [
+
   {
     icon: Building2,
     title: "Gestion des Biens Immobiliers",
