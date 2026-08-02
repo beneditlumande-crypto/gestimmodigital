@@ -13,17 +13,22 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const name = String(body?.name ?? "").trim();
-    const email = String(body?.email ?? "").trim();
-    const phone = String(body?.phone ?? "").trim();
-    const subject = String(body?.subject ?? "").trim();
-    const message = String(body?.message ?? "").trim();
+    const s = (v: unknown) => String(v ?? "").trim();
+    const name = s(body?.name);
+    const email = s(body?.email);
+    const phone = s(body?.phone);
+    const company = s(body?.company);
+    const service = s(body?.service);
+    const budget = s(body?.budget);
+    const description = s(body?.description);
+    const desiredDate = s(body?.desiredDate);
 
     if (
       !name || name.length > 100 ||
       !email || email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-      phone.length > 30 || subject.length > 150 ||
-      !message || message.length > 2000
+      phone.length > 30 || company.length > 150 ||
+      !service || service.length > 150 || budget.length > 100 ||
+      !description || description.length > 3000
     ) {
       return new Response(JSON.stringify({ error: "Données invalides" }), {
         status: 400,
@@ -37,11 +42,15 @@ Deno.serve(async (req) => {
       { auth: { persistSession: false } },
     );
 
-    const { error: dbError } = await supabase.from("contact_messages").insert({
+    const { error: dbError } = await supabase.from("quote_requests").insert({
       name,
       email,
       phone: phone || null,
-      message: subject ? `[${subject}] ${message}` : message,
+      company: company || null,
+      service,
+      budget: budget || null,
+      description,
+      desired_date: desiredDate || null,
     });
 
     if (dbError) {
@@ -52,35 +61,38 @@ Deno.serve(async (req) => {
       });
     }
 
-    const html = `
-      <h2>Nouveau message — Gestimmo Digital</h2>
+    const adminHtml = `
+      <h2>Nouvelle demande de devis — Gestimmo Digital</h2>
       <p><strong>Nom :</strong> ${esc(name)}</p>
       <p><strong>Email :</strong> ${esc(email)}</p>
       <p><strong>Téléphone :</strong> ${esc(phone || "non renseigné")}</p>
-      <p><strong>Objet :</strong> ${esc(subject || "non renseigné")}</p>
-      <p><strong>Message :</strong></p>
-      <p style="white-space:pre-wrap">${esc(message)}</p>
+      <p><strong>Entreprise :</strong> ${esc(company || "non renseignée")}</p>
+      <p><strong>Service souhaité :</strong> ${esc(service)}</p>
+      <p><strong>Budget estimé :</strong> ${esc(budget || "non renseigné")}</p>
+      <p><strong>Date souhaitée :</strong> ${esc(desiredDate || "non renseignée")}</p>
+      <p><strong>Description du projet :</strong></p>
+      <p style="white-space:pre-wrap">${esc(description)}</p>
       <hr />
-      <p><strong>Date et heure :</strong> ${esc(kinshasaNow())} (Kinshasa)</p>
+      <p><strong>Reçue le :</strong> ${esc(kinshasaNow())} (Kinshasa)</p>
     `;
 
-    const emailSent = await sendEmail({
+    const notified = await sendEmail({
       to: NOTIFY_TO,
-      subject: `Nouveau message de ${name}${subject ? ` — ${subject}` : ""}`,
-      html,
+      subject: `Nouvelle demande de devis — ${name} (${service})`,
+      html: adminHtml,
       replyTo: email,
     });
 
     const replied = await sendEmail({
       to: email,
-      subject: "Merci de nous avoir contactés – Gestimmo Digital",
+      subject: "Merci pour votre demande de devis – Gestimmo Digital",
       html: autoReplyHtml(
         name,
-        "Merci de nous avoir contactés. Nous avons bien reçu votre message et notre équipe l'étudiera dans les plus brefs délais.",
+        "Merci pour votre demande de devis. Nous avons bien reçu votre demande et notre équipe l'étudiera dans les plus brefs délais.",
       ),
     });
 
-    return new Response(JSON.stringify({ ok: true, emailSent, replied }), {
+    return new Response(JSON.stringify({ ok: true, notified, replied }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

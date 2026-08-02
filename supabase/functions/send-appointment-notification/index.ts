@@ -13,17 +13,23 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const name = String(body?.name ?? "").trim();
-    const email = String(body?.email ?? "").trim();
-    const phone = String(body?.phone ?? "").trim();
-    const subject = String(body?.subject ?? "").trim();
-    const message = String(body?.message ?? "").trim();
+    const s = (v: unknown) => String(v ?? "").trim();
+    const name = s(body?.name);
+    const email = s(body?.email);
+    const phone = s(body?.phone);
+    const service = s(body?.service);
+    const date = s(body?.date);
+    const time = s(body?.time);
+    const comment = s(body?.comment);
 
     if (
       !name || name.length > 100 ||
       !email || email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-      phone.length > 30 || subject.length > 150 ||
-      !message || message.length > 2000
+      phone.length > 30 ||
+      !service || service.length > 150 ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+      !time || time.length > 20 ||
+      comment.length > 2000
     ) {
       return new Response(JSON.stringify({ error: "Données invalides" }), {
         status: 400,
@@ -37,11 +43,14 @@ Deno.serve(async (req) => {
       { auth: { persistSession: false } },
     );
 
-    const { error: dbError } = await supabase.from("contact_messages").insert({
+    const { error: dbError } = await supabase.from("appointments").insert({
       name,
       email,
       phone: phone || null,
-      message: subject ? `[${subject}] ${message}` : message,
+      service,
+      appointment_date: date,
+      appointment_time: time,
+      comment: comment || null,
     });
 
     if (dbError) {
@@ -52,35 +61,37 @@ Deno.serve(async (req) => {
       });
     }
 
-    const html = `
-      <h2>Nouveau message — Gestimmo Digital</h2>
+    const adminHtml = `
+      <h2>Nouvelle demande de rendez-vous — Gestimmo Digital</h2>
       <p><strong>Nom :</strong> ${esc(name)}</p>
       <p><strong>Email :</strong> ${esc(email)}</p>
       <p><strong>Téléphone :</strong> ${esc(phone || "non renseigné")}</p>
-      <p><strong>Objet :</strong> ${esc(subject || "non renseigné")}</p>
-      <p><strong>Message :</strong></p>
-      <p style="white-space:pre-wrap">${esc(message)}</p>
+      <p><strong>Service :</strong> ${esc(service)}</p>
+      <p><strong>Date :</strong> ${esc(date)}</p>
+      <p><strong>Heure :</strong> ${esc(time)}</p>
+      <p><strong>Commentaire :</strong></p>
+      <p style="white-space:pre-wrap">${esc(comment || "aucun")}</p>
       <hr />
-      <p><strong>Date et heure :</strong> ${esc(kinshasaNow())} (Kinshasa)</p>
+      <p><strong>Reçue le :</strong> ${esc(kinshasaNow())} (Kinshasa)</p>
     `;
 
-    const emailSent = await sendEmail({
+    const notified = await sendEmail({
       to: NOTIFY_TO,
-      subject: `Nouveau message de ${name}${subject ? ` — ${subject}` : ""}`,
-      html,
+      subject: `Nouveau rendez-vous — ${name} le ${date} à ${time}`,
+      html: adminHtml,
       replyTo: email,
     });
 
     const replied = await sendEmail({
       to: email,
-      subject: "Merci de nous avoir contactés – Gestimmo Digital",
+      subject: "Confirmation de votre demande de rendez-vous – Gestimmo Digital",
       html: autoReplyHtml(
         name,
-        "Merci de nous avoir contactés. Nous avons bien reçu votre message et notre équipe l'étudiera dans les plus brefs délais.",
+        `Nous avons bien reçu votre demande de rendez-vous du <strong>${esc(date)}</strong> à <strong>${esc(time)}</strong> concernant : <strong>${esc(service)}</strong>. Notre équipe confirmera ce créneau dans les plus brefs délais.`,
       ),
     });
 
-    return new Response(JSON.stringify({ ok: true, emailSent, replied }), {
+    return new Response(JSON.stringify({ ok: true, notified, replied }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
