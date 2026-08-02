@@ -8,7 +8,12 @@ import Services from "./pages/Services";
 import Properties from "./pages/Properties";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Devis from "./pages/Devis";
+import RendezVous from "./pages/RendezVous";
+import Auth from "./pages/Auth";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+
 import WhatsAppButton from "./components/WhatsAppButton";
 import { VersionChecker } from "./components/VersionChecker";
 
@@ -27,6 +32,11 @@ const App = () => (
           <Route path="/biens" element={<Properties />} />
           <Route path="/a-propos" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/devis" element={<Devis />} />
+          <Route path="/rendez-vous" element={<RendezVous />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Admin />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <WhatsAppButton />
