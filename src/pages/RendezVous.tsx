@@ -246,7 +246,7 @@ const RendezVous = () => {
               <button type="submit" disabled={submitting}
 
                 className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-60">
-                {submitting ? "Envoi en cours..." : "Confirmer le rendez-vous"}
+                {submitting ? "Envoi en cours..." : isConsultation ? "Envoyer ma demande de consultation" : "Confirmer le rendez-vous"}
               </button>
             </form>
           </div>
