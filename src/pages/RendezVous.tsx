@@ -185,6 +185,57 @@ const RendezVous = () => {
                   </select>
                 </div>
               </div>
+              {isConsultation && (
+                <div className="rounded-xl border border-border bg-muted/40 p-5 space-y-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="font-display font-bold text-foreground">{CONSULTATION_SERVICE}</h3>
+                    <span className="text-primary font-bold text-lg">50 USD</span>
+                  </div>
+
+                  <div className="flex gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-muted-foreground">
+                    <Info size={16} className="text-primary shrink-0 mt-0.5" />
+                    <p>
+                      Les consultations sont uniquement confirmées après vérification du paiement. Cette procédure
+                      garantit la réservation de votre créneau et permet de vous offrir un accompagnement personnalisé.
+                    </p>
+                  </div>
+
+                  <div className="text-sm text-foreground space-y-1">
+                    <p><strong>Mode de paiement :</strong> M-Pesa</p>
+                    <p><strong>Numéro M-Pesa :</strong> +243 829 791 356</p>
+                    <p><strong>Titulaire :</strong> Benedit Lumande</p>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground">
+                    Veuillez effectuer le paiement de 50 USD via M-Pesa avant la confirmation de votre rendez-vous.
+                    Après le paiement, téléversez une capture d'écran ou une preuve de paiement afin que nous puissions
+                    vérifier votre transaction. Votre rendez-vous sera confirmé après validation du paiement.
+                  </p>
+
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Numéro utilisé pour le paiement</label>
+                    <input type="tel" maxLength={30} value={payerNumber}
+                      onChange={(e) => setPayerNumber(e.target.value)}
+                      className={inputClass} placeholder="+243..." />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="proof-upload"
+                      className="inline-flex items-center gap-2 cursor-pointer rounded-lg border border-primary bg-background px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition-colors"
+                    >
+                      <Upload size={16} />
+                      Téléverser une preuve de paiement
+                    </label>
+                    <input id="proof-upload" type="file" className="sr-only"
+                      accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+                      onChange={(e) => setProofFile(e.target.files?.[0] ?? null)} />
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {proofFile ? `Fichier sélectionné : ${proofFile.name}` : "Formats acceptés : JPG, PNG, PDF (max 5 Mo)"}
+                    </p>
+                  </div>
+                </div>
+              )}
               <div>
                 <label className="text-sm font-medium text-foreground mb-1 block">Commentaire</label>
                 <textarea rows={4} maxLength={2000} value={form.comment}
@@ -193,6 +244,7 @@ const RendezVous = () => {
                   placeholder="Précisez le sujet de votre rendez-vous..." />
               </div>
               <button type="submit" disabled={submitting}
+
                 className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-60">
                 {submitting ? "Envoi en cours..." : "Confirmer le rendez-vous"}
               </button>
