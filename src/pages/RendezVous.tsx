@@ -165,6 +165,7 @@ const RendezVous = () => {
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
                     className={inputClass}>
                     <option value="">Sélectionner un service</option>
+                    <option value={CONSULTATION_SERVICE}>{CONSULTATION_SERVICE} — 50 USD</option>
                     {SERVICE_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
