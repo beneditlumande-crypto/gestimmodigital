@@ -5,7 +5,9 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { SERVICE_OPTIONS, TIME_OPTIONS } from "@/lib/services";
-import { CalendarClock } from "lucide-react";
+import { CalendarClock, Upload, Info } from "lucide-react";
+
+export const CONSULTATION_SERVICE = "Consultation stratégique (60 minutes)";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Le nom est requis").max(100, "Nom trop long"),
@@ -22,11 +24,16 @@ const inputClass =
 
 const empty = { name: "", email: "", phone: "", service: "", date: "", time: "", comment: "" };
 
+const ACCEPTED = ["image/jpeg", "image/png", "application/pdf"];
+
 const RendezVous = () => {
   const { toast } = useToast();
   const [form, setForm] = useState(empty);
   const [submitting, setSubmitting] = useState(false);
+  const [payerNumber, setPayerNumber] = useState("");
+  const [proofFile, setProofFile] = useState<File | null>(null);
   const today = new Date().toISOString().slice(0, 10);
+  const isConsultation = form.service === CONSULTATION_SERVICE;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +46,56 @@ const RendezVous = () => {
       });
       return;
     }
+
+    if (isConsultation) {
+      if (!payerNumber.trim()) {
+        toast({ title: "Validation", description: "Indiquez le numéro M-Pesa utilisé pour le paiement.", variant: "destructive" });
+        return;
+      }
+      if (!proofFile) {
+        toast({ title: "Preuve requise", description: "Téléversez une capture d'écran ou un PDF de votre paiement.", variant: "destructive" });
+        return;
+      }
+      if (!ACCEPTED.includes(proofFile.type)) {
+        toast({ title: "Format non accepté", description: "Formats acceptés : JPG, PNG ou PDF.", variant: "destructive" });
+        return;
+      }
+      if (proofFile.size > 5 * 1024 * 1024) {
+        toast({ title: "Fichier trop volumineux", description: "Taille maximale : 5 Mo.", variant: "destructive" });
+        return;
+      }
+
+      setSubmitting(true);
+      const ext = proofFile.name.split(".").pop()?.toLowerCase() ?? "bin";
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("payment-proofs")
+        .upload(path, proofFile, { contentType: proofFile.type });
+      if (upErr) {
+        setSubmitting(false);
+        console.error("proof upload failed:", upErr);
+        toast({ title: "Téléversement impossible", description: "Merci de réessayer ou de nous contacter via WhatsApp.", variant: "destructive" });
+        return;
+      }
+      const { error } = await supabase.functions.invoke("send-consultation-notification", {
+        body: { ...parsed.data, payerNumber: payerNumber.trim(), proofPath: path },
+      });
+      setSubmitting(false);
+      if (error) {
+        console.error("send-consultation-notification failed:", error);
+        toast({ title: "Envoi impossible", description: "Une erreur est survenue. Merci de réessayer ou de nous contacter via WhatsApp.", variant: "destructive" });
+        return;
+      }
+      toast({
+        title: "Demande reçue !",
+        description: "Nous vérifions votre paiement — votre rendez-vous reste en attente jusqu'à validation.",
+      });
+      setForm(empty);
+      setPayerNumber("");
+      setProofFile(null);
+      return;
+    }
+
     setSubmitting(true);
     const { error } = await supabase.functions.invoke("send-appointment-notification", {
       body: parsed.data,
@@ -59,6 +116,7 @@ const RendezVous = () => {
     });
     setForm(empty);
   };
+
 
   return (
     <div className="min-h-screen bg-background">
