@@ -5,7 +5,9 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { SERVICE_OPTIONS, TIME_OPTIONS } from "@/lib/services";
-import { CalendarClock } from "lucide-react";
+import { CalendarClock, Upload, Info } from "lucide-react";
+
+export const CONSULTATION_SERVICE = "Consultation stratégique (60 minutes)";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Le nom est requis").max(100, "Nom trop long"),
@@ -22,11 +24,16 @@ const inputClass =
 
 const empty = { name: "", email: "", phone: "", service: "", date: "", time: "", comment: "" };
 
+const ACCEPTED = ["image/jpeg", "image/png", "application/pdf"];
+
 const RendezVous = () => {
   const { toast } = useToast();
   const [form, setForm] = useState(empty);
   const [submitting, setSubmitting] = useState(false);
+  const [payerNumber, setPayerNumber] = useState("");
+  const [proofFile, setProofFile] = useState<File | null>(null);
   const today = new Date().toISOString().slice(0, 10);
+  const isConsultation = form.service === CONSULTATION_SERVICE;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +46,56 @@ const RendezVous = () => {
       });
       return;
     }
+
+    if (isConsultation) {
+      if (!payerNumber.trim()) {
+        toast({ title: "Validation", description: "Indiquez le numéro M-Pesa utilisé pour le paiement.", variant: "destructive" });
+        return;
+      }
+      if (!proofFile) {
+        toast({ title: "Preuve requise", description: "Téléversez une capture d'écran ou un PDF de votre paiement.", variant: "destructive" });
+        return;
+      }
+      if (!ACCEPTED.includes(proofFile.type)) {
+        toast({ title: "Format non accepté", description: "Formats acceptés : JPG, PNG ou PDF.", variant: "destructive" });
+        return;
+      }
+      if (proofFile.size > 5 * 1024 * 1024) {
+        toast({ title: "Fichier trop volumineux", description: "Taille maximale : 5 Mo.", variant: "destructive" });
+        return;
+      }
+
+      setSubmitting(true);
+      const ext = proofFile.name.split(".").pop()?.toLowerCase() ?? "bin";
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("payment-proofs")
+        .upload(path, proofFile, { contentType: proofFile.type });
+      if (upErr) {
+        setSubmitting(false);
+        console.error("proof upload failed:", upErr);
+        toast({ title: "Téléversement impossible", description: "Merci de réessayer ou de nous contacter via WhatsApp.", variant: "destructive" });
+        return;
+      }
+      const { error } = await supabase.functions.invoke("send-consultation-notification", {
+        body: { ...parsed.data, payerNumber: payerNumber.trim(), proofPath: path },
+      });
+      setSubmitting(false);
+      if (error) {
+        console.error("send-consultation-notification failed:", error);
+        toast({ title: "Envoi impossible", description: "Une erreur est survenue. Merci de réessayer ou de nous contacter via WhatsApp.", variant: "destructive" });
+        return;
+      }
+      toast({
+        title: "Demande reçue !",
+        description: "Nous vérifions votre paiement — votre rendez-vous reste en attente jusqu'à validation.",
+      });
+      setForm(empty);
+      setPayerNumber("");
+      setProofFile(null);
+      return;
+    }
+
     setSubmitting(true);
     const { error } = await supabase.functions.invoke("send-appointment-notification", {
       body: parsed.data,
@@ -59,6 +116,7 @@ const RendezVous = () => {
     });
     setForm(empty);
   };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -107,6 +165,7 @@ const RendezVous = () => {
                     onChange={(e) => setForm({ ...form, service: e.target.value })}
                     className={inputClass}>
                     <option value="">Sélectionner un service</option>
+                    <option value={CONSULTATION_SERVICE}>{CONSULTATION_SERVICE} — 50 USD</option>
                     {SERVICE_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
@@ -126,6 +185,57 @@ const RendezVous = () => {
                   </select>
                 </div>
               </div>
+              {isConsultation && (
+                <div className="rounded-xl border border-border bg-muted/40 p-5 space-y-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="font-display font-bold text-foreground">{CONSULTATION_SERVICE}</h3>
+                    <span className="text-primary font-bold text-lg">50 USD</span>
+                  </div>
+
+                  <div className="flex gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-muted-foreground">
+                    <Info size={16} className="text-primary shrink-0 mt-0.5" />
+                    <p>
+                      Les consultations sont uniquement confirmées après vérification du paiement. Cette procédure
+                      garantit la réservation de votre créneau et permet de vous offrir un accompagnement personnalisé.
+                    </p>
+                  </div>
+
+                  <div className="text-sm text-foreground space-y-1">
+                    <p><strong>Mode de paiement :</strong> M-Pesa</p>
+                    <p><strong>Numéro M-Pesa :</strong> +243 829 791 356</p>
+                    <p><strong>Titulaire :</strong> Benedit Lumande</p>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground">
+                    Veuillez effectuer le paiement de 50 USD via M-Pesa avant la confirmation de votre rendez-vous.
+                    Après le paiement, téléversez une capture d'écran ou une preuve de paiement afin que nous puissions
+                    vérifier votre transaction. Votre rendez-vous sera confirmé après validation du paiement.
+                  </p>
+
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Numéro utilisé pour le paiement</label>
+                    <input type="tel" maxLength={30} value={payerNumber}
+                      onChange={(e) => setPayerNumber(e.target.value)}
+                      className={inputClass} placeholder="+243..." />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="proof-upload"
+                      className="inline-flex items-center gap-2 cursor-pointer rounded-lg border border-primary bg-background px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition-colors"
+                    >
+                      <Upload size={16} />
+                      Téléverser une preuve de paiement
+                    </label>
+                    <input id="proof-upload" type="file" className="sr-only"
+                      accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+                      onChange={(e) => setProofFile(e.target.files?.[0] ?? null)} />
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {proofFile ? `Fichier sélectionné : ${proofFile.name}` : "Formats acceptés : JPG, PNG, PDF (max 5 Mo)"}
+                    </p>
+                  </div>
+                </div>
+              )}
               <div>
                 <label className="text-sm font-medium text-foreground mb-1 block">Commentaire</label>
                 <textarea rows={4} maxLength={2000} value={form.comment}
@@ -135,7 +245,8 @@ const RendezVous = () => {
               </div>
               <button type="submit" disabled={submitting}
                 className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors disabled:opacity-60">
-                {submitting ? "Envoi en cours..." : "Confirmer le rendez-vous"}
+
+                {submitting ? "Envoi en cours..." : isConsultation ? "Envoyer ma demande de consultation" : "Confirmer le rendez-vous"}
               </button>
             </form>
           </div>

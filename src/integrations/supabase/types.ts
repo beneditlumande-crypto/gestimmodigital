@@ -80,6 +80,57 @@ export type Database = {
         }
         Relationships: []
       }
+      consultation_payments: {
+        Row: {
+          amount_usd: number
+          appointment_date: string
+          appointment_time: string
+          comment: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          payer_number: string | null
+          payment_method: string
+          payment_status: string
+          phone: string | null
+          proof_path: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_usd?: number
+          appointment_date: string
+          appointment_time: string
+          comment?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          payer_number?: string | null
+          payment_method?: string
+          payment_status?: string
+          phone?: string | null
+          proof_path?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_usd?: number
+          appointment_date?: string
+          appointment_time?: string
+          comment?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          payer_number?: string | null
+          payment_method?: string
+          payment_status?: string
+          phone?: string | null
+          proof_path?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string

@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Download, LogOut, Search, ShieldAlert } from "lucide-react";
 
-type Tab = "messages" | "devis" | "rdv";
+type Tab = "messages" | "devis" | "rdv" | "consultations";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "messages", label: "Messages" },
   { id: "devis", label: "Demandes de devis" },
   { id: "rdv", label: "Rendez-vous" },
+  { id: "consultations", label: "Consultations payantes" },
 ];
 
 const COLUMNS: Record<Tab, { key: string; label: string }[]> = {
@@ -41,13 +42,29 @@ const COLUMNS: Record<Tab, { key: string; label: string }[]> = {
     { key: "status", label: "Statut" },
     { key: "comment", label: "Commentaire" },
   ],
+  consultations: [
+    { key: "created_at", label: "Date" },
+    { key: "name", label: "Nom" },
+    { key: "email", label: "Email" },
+    { key: "phone", label: "Téléphone" },
+    { key: "appointment_date", label: "Date RDV" },
+    { key: "appointment_time", label: "Heure" },
+    { key: "amount_usd", label: "Montant (USD)" },
+    { key: "payment_method", label: "Paiement" },
+    { key: "payer_number", label: "Numéro payeur" },
+    { key: "proof_path", label: "Preuve" },
+    { key: "payment_status", label: "Statut paiement" },
+    { key: "comment", label: "Commentaire" },
+  ],
 };
 
-const TABLE_NAME: Record<Tab, "contact_messages" | "quote_requests" | "appointments"> = {
+const TABLE_NAME: Record<Tab, "contact_messages" | "quote_requests" | "appointments" | "consultation_payments"> = {
   messages: "contact_messages",
   devis: "quote_requests",
   rdv: "appointments",
+  consultations: "consultation_payments",
 };
+
 
 const fmt = (key: string, value: unknown) => {
   if (value === null || value === undefined || value === "") return "—";
