@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Download, LogOut, Search, ShieldAlert } from "lucide-react";
+import { Check, Download, LogOut, Search, ShieldAlert, X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
 
 type Tab = "messages" | "devis" | "rdv" | "consultations";
 
