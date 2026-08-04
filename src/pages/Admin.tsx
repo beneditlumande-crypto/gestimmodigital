@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Download, LogOut, Search, ShieldAlert } from "lucide-react";
+import { Check, Download, LogOut, Search, ShieldAlert, X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
 
 type Tab = "messages" | "devis" | "rdv" | "consultations";
 
@@ -66,11 +68,19 @@ const TABLE_NAME: Record<Tab, "contact_messages" | "quote_requests" | "appointme
 };
 
 
+const STATUS_LABEL: Record<string, string> = {
+  en_attente: "En attente",
+  valide: "Validé",
+  refuse: "Refusé",
+};
+
 const fmt = (key: string, value: unknown) => {
   if (value === null || value === undefined || value === "") return "—";
   if (key === "created_at") return new Date(String(value)).toLocaleString("fr-FR");
+  if (key === "payment_status") return STATUS_LABEL[String(value)] ?? String(value);
   return String(value);
 };
+
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -82,6 +92,41 @@ const Admin = () => {
   const [query, setQuery] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [reviewingId, setReviewingId] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const reviewConsultation = async (id: string, status: "valide" | "refuse") => {
+    const reason = window.prompt(
+      status === "valide"
+        ? "Message optionnel à ajouter à l'e-mail de confirmation :"
+        : "Motif du refus (envoyé au client, optionnel) :",
+      "",
+    );
+    if (reason === null) return;
+    setReviewingId(id);
+    try {
+      const { data, error } = await supabase.functions.invoke("review-consultation-payment", {
+        body: { id, status, reason },
+      });
+      if (error) throw error;
+      setRows((prev) => prev.map((r) => (r.id === id ? { ...r, payment_status: status } : r)));
+      toast({
+        title: status === "valide" ? "Consultation validée" : "Consultation refusée",
+        description: (data as { emailSent?: boolean })?.emailSent
+          ? "Le client a été notifié par e-mail."
+          : "Statut mis à jour, mais l'e-mail n'a pas pu être envoyé.",
+      });
+    } catch (e) {
+      toast({
+        title: "Action impossible",
+        description: "Une erreur est survenue. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setReviewingId(null);
+    }
+  };
+
 
   useEffect(() => {
     let active = true;
@@ -242,14 +287,17 @@ const Admin = () => {
                     {c.label}
                   </th>
                 ))}
+                {tab === "consultations" && (
+                  <th className="text-left font-semibold text-foreground px-4 py-3 whitespace-nowrap">Validation</th>
+                )}
               </tr>
             </thead>
             <tbody>
               {loading && (
-                <tr><td colSpan={cols.length} className="px-4 py-8 text-center text-muted-foreground">Chargement…</td></tr>
+                <tr><td colSpan={cols.length + 1} className="px-4 py-8 text-center text-muted-foreground">Chargement…</td></tr>
               )}
               {!loading && !filtered.length && (
-                <tr><td colSpan={cols.length} className="px-4 py-8 text-center text-muted-foreground">Aucune donnée</td></tr>
+                <tr><td colSpan={cols.length + 1} className="px-4 py-8 text-center text-muted-foreground">Aucune donnée</td></tr>
               )}
               {!loading && filtered.map((r, i) => (
                 <tr key={String(r.id ?? i)} className="border-b border-border last:border-0 hover:bg-accent/40">
@@ -258,7 +306,34 @@ const Admin = () => {
                       <span className="line-clamp-3 whitespace-pre-wrap break-words">{fmt(c.key, r[c.key])}</span>
                     </td>
                   ))}
+                  {tab === "consultations" && (
+                    <td className="px-4 py-3 align-top whitespace-nowrap">
+                      {r.payment_status === "en_attente" ? (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => reviewConsultation(String(r.id), "valide")}
+                            disabled={reviewingId === String(r.id)}
+                            className="inline-flex items-center gap-1 rounded-lg bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+                          >
+                            <Check size={14} /> Valider
+                          </button>
+                          <button
+                            onClick={() => reviewConsultation(String(r.id), "refuse")}
+                            disabled={reviewingId === String(r.id)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-destructive text-destructive px-3 py-1.5 text-xs font-semibold hover:bg-destructive/10 transition-colors disabled:opacity-50"
+                          >
+                            <X size={14} /> Refuser
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="text-xs font-semibold text-muted-foreground">
+                          {STATUS_LABEL[String(r.payment_status)] ?? "—"}
+                        </span>
+                      )}
+                    </td>
+                  )}
                 </tr>
+
               ))}
             </tbody>
           </table>
