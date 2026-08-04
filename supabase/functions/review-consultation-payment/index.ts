@@ -61,6 +61,21 @@ Deno.serve(async (req) => {
     }
 
     const dateTime = `${row.appointment_date} à ${row.appointment_time}`;
+    const reference = `GD-CONS-${String(row.id).slice(0, 8).toUpperCase()}`;
+    const recapHtml = `
+      <h3 style="margin-bottom:8px">Récapitulatif du rendez-vous</h3>
+      <p><strong>Référence de la transaction :</strong> ${esc(reference)}</p>
+      <p><strong>Prestation :</strong> Consultation stratégique (60 minutes)</p>
+      <p><strong>Client :</strong> ${esc(row.name)}</p>
+      <p><strong>Email :</strong> ${esc(row.email)}</p>
+      <p><strong>Téléphone :</strong> ${esc(row.phone || "non renseigné")}</p>
+      <p><strong>Date et heure :</strong> ${esc(dateTime)} (heure de Kinshasa)</p>
+      <p><strong>Montant :</strong> ${esc(String(row.amount_usd))} USD</p>
+      <p><strong>Moyen de paiement :</strong> ${esc(row.payment_method)}</p>
+      <p><strong>Numéro payeur :</strong> ${esc(row.payer_number || "non renseigné")}</p>
+      <p><strong>Statut du paiement :</strong> Validé</p>
+    `;
+
     const html =
       status === "valide"
         ? `
@@ -68,6 +83,7 @@ Deno.serve(async (req) => {
           <p>Votre paiement de ${esc(String(row.amount_usd))} USD a été <strong>vérifié et validé</strong>.</p>
           <p>Votre consultation stratégique (60 minutes) est confirmée pour le <strong>${esc(dateTime)}</strong> (heure de Kinshasa).</p>
           ${reason ? `<p>${esc(reason)}</p>` : ""}
+          ${recapHtml}
           <p>Nous vous contacterons peu avant le rendez-vous avec les modalités de connexion ou de rencontre.</p>
           ${SIGNATURE}
         `
@@ -75,6 +91,7 @@ Deno.serve(async (req) => {
           <p>Bonjour ${esc(row.name)},</p>
           <p>Après vérification, nous n'avons malheureusement pas pu confirmer votre paiement pour la consultation stratégique prévue le <strong>${esc(dateTime)}</strong>.</p>
           ${reason ? `<p><strong>Motif :</strong> ${esc(reason)}</p>` : ""}
+          <p>Référence de la transaction : ${esc(reference)}</p>
           <p>Votre rendez-vous n'est donc pas confirmé. Vous pouvez nous répondre à cet e-mail ou nous écrire au +243 82 97 91 356 (WhatsApp) pour régulariser la situation.</p>
           ${SIGNATURE}
         `;
@@ -83,14 +100,31 @@ Deno.serve(async (req) => {
       to: row.email,
       subject:
         status === "valide"
-          ? "Consultation stratégique confirmée – Gestimmo Digital"
-          : "Paiement non confirmé – Gestimmo Digital",
+          ? `Consultation stratégique confirmée (${reference}) – Gestimmo Digital`
+          : `Paiement non confirmé (${reference}) – Gestimmo Digital`,
       html,
       replyTo: NOTIFY_TO,
     });
 
-    console.log(`Consultation ${id} -> ${status} le ${kinshasaNow()} (email: ${sent})`);
-    return json({ ok: true, status, emailSent: sent });
+    let adminSent = false;
+    if (status === "valide") {
+      adminSent = await sendEmail({
+        to: NOTIFY_TO,
+        subject: `Paiement validé — ${row.name} le ${row.appointment_date} à ${row.appointment_time} (${reference})`,
+        html: `
+          <h2>Consultation stratégique confirmée</h2>
+          <p>Le paiement a été validé le ${esc(kinshasaNow())} (Kinshasa).</p>
+          ${recapHtml}
+          ${reason ? `<p><strong>Note interne / message envoyé au client :</strong> ${esc(reason)}</p>` : ""}
+          <p>Le client a reçu son e-mail de confirmation.</p>
+        `,
+        replyTo: row.email,
+      });
+    }
+
+    console.log(`Consultation ${id} -> ${status} le ${kinshasaNow()} (client: ${sent}, agence: ${adminSent})`);
+    return json({ ok: true, status, reference, emailSent: sent, adminEmailSent: adminSent });
+
   } catch (e) {
     console.error("Unexpected error:", e);
     return json({ error: "Erreur interne" }, 500);
