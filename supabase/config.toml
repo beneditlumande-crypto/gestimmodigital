@@ -11,3 +11,7 @@ verify_jwt = false
 
 [functions.send-consultation-notification]
 verify_jwt = false
+
+[functions.review-consultation-payment]
+verify_jwt = false
+
