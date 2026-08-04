@@ -90,6 +90,41 @@ const Admin = () => {
   const [query, setQuery] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [reviewingId, setReviewingId] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const reviewConsultation = async (id: string, status: "valide" | "refuse") => {
+    const reason = window.prompt(
+      status === "valide"
+        ? "Message optionnel à ajouter à l'e-mail de confirmation :"
+        : "Motif du refus (envoyé au client, optionnel) :",
+      "",
+    );
+    if (reason === null) return;
+    setReviewingId(id);
+    try {
+      const { data, error } = await supabase.functions.invoke("review-consultation-payment", {
+        body: { id, status, reason },
+      });
+      if (error) throw error;
+      setRows((prev) => prev.map((r) => (r.id === id ? { ...r, payment_status: status } : r)));
+      toast({
+        title: status === "valide" ? "Consultation validée" : "Consultation refusée",
+        description: (data as { emailSent?: boolean })?.emailSent
+          ? "Le client a été notifié par e-mail."
+          : "Statut mis à jour, mais l'e-mail n'a pas pu être envoyé.",
+      });
+    } catch (e) {
+      toast({
+        title: "Action impossible",
+        description: "Une erreur est survenue. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setReviewingId(null);
+    }
+  };
+
 
   useEffect(() => {
     let active = true;
