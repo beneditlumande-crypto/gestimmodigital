@@ -66,11 +66,19 @@ const TABLE_NAME: Record<Tab, "contact_messages" | "quote_requests" | "appointme
 };
 
 
+const STATUS_LABEL: Record<string, string> = {
+  en_attente: "En attente",
+  valide: "Validé",
+  refuse: "Refusé",
+};
+
 const fmt = (key: string, value: unknown) => {
   if (value === null || value === undefined || value === "") return "—";
   if (key === "created_at") return new Date(String(value)).toLocaleString("fr-FR");
+  if (key === "payment_status") return STATUS_LABEL[String(value)] ?? String(value);
   return String(value);
 };
+
 
 const Admin = () => {
   const navigate = useNavigate();
