@@ -287,14 +287,17 @@ const Admin = () => {
                     {c.label}
                   </th>
                 ))}
+                {tab === "consultations" && (
+                  <th className="text-left font-semibold text-foreground px-4 py-3 whitespace-nowrap">Validation</th>
+                )}
               </tr>
             </thead>
             <tbody>
               {loading && (
-                <tr><td colSpan={cols.length} className="px-4 py-8 text-center text-muted-foreground">Chargement…</td></tr>
+                <tr><td colSpan={cols.length + 1} className="px-4 py-8 text-center text-muted-foreground">Chargement…</td></tr>
               )}
               {!loading && !filtered.length && (
-                <tr><td colSpan={cols.length} className="px-4 py-8 text-center text-muted-foreground">Aucune donnée</td></tr>
+                <tr><td colSpan={cols.length + 1} className="px-4 py-8 text-center text-muted-foreground">Aucune donnée</td></tr>
               )}
               {!loading && filtered.map((r, i) => (
                 <tr key={String(r.id ?? i)} className="border-b border-border last:border-0 hover:bg-accent/40">
@@ -303,7 +306,34 @@ const Admin = () => {
                       <span className="line-clamp-3 whitespace-pre-wrap break-words">{fmt(c.key, r[c.key])}</span>
                     </td>
                   ))}
+                  {tab === "consultations" && (
+                    <td className="px-4 py-3 align-top whitespace-nowrap">
+                      {r.payment_status === "en_attente" ? (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => reviewConsultation(String(r.id), "valide")}
+                            disabled={reviewingId === String(r.id)}
+                            className="inline-flex items-center gap-1 rounded-lg bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+                          >
+                            <Check size={14} /> Valider
+                          </button>
+                          <button
+                            onClick={() => reviewConsultation(String(r.id), "refuse")}
+                            disabled={reviewingId === String(r.id)}
+                            className="inline-flex items-center gap-1 rounded-lg border border-destructive text-destructive px-3 py-1.5 text-xs font-semibold hover:bg-destructive/10 transition-colors disabled:opacity-50"
+                          >
+                            <X size={14} /> Refuser
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="text-xs font-semibold text-muted-foreground">
+                          {STATUS_LABEL[String(r.payment_status)] ?? "—"}
+                        </span>
+                      )}
+                    </td>
+                  )}
                 </tr>
+
               ))}
             </tbody>
           </table>
