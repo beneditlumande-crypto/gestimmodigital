@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logoAsset from "@/assets/gestimmo-logo.jpg.asset.json";
+import { SERVICE_OPTIONS, slugifyService } from "@/lib/services";
 
 const Footer = () => (
   <footer className="bg-dark text-dark-foreground py-16">
