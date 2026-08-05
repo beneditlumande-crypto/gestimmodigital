@@ -14,7 +14,7 @@ const Footer = () => (
               alt="Gestimmo Digital"
               width={40}
               height={40}
-              className="h-10 w-10 shrink-0 rounded-full object-cover bg-white"
+              className="h-12 w-12 shrink-0 rounded-full object-contain bg-white p-0.5"
             />
             <h3 className="font-display text-xl font-bold">
               Gestimmo <span className="text-primary">Digital</span>
