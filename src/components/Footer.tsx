@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logoAsset from "@/assets/gestimmo-logo.jpg.asset.json";
+import { SERVICE_OPTIONS, slugifyService } from "@/lib/services";
 
 const Footer = () => (
   <footer className="bg-dark text-dark-foreground py-16">
     <div className="container px-4">
-      <div className="grid md:grid-cols-4 gap-10">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 mb-1">
             <img
               src={logoAsset.url}
               alt="Gestimmo Digital"
-              className="h-10 w-10 rounded-full object-contain bg-white"
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0 rounded-full object-cover bg-white"
             />
             <h3 className="font-display text-xl font-bold">
               Gestimmo <span className="text-primary">Digital</span>
@@ -38,15 +41,15 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Services</h4>
           <div className="flex flex-col gap-2 text-sm opacity-70">
-            <span>Gestion immobilière</span>
-            <span>Location & Vente</span>
-            <span>Promotion immobilière</span>
-            <span>Création de sites web</span>
-            <span>Marketing digital</span>
-            <span>Analyse de données</span>
-            <span>Automatisation & IA</span>
-            <span>Référencement SEO</span>
-            <span>Applications web & API</span>
+            {SERVICE_OPTIONS.filter((s) => s !== "Autre").map((s) => (
+              <Link
+                key={s}
+                to={`/services#${slugifyService(s)}`}
+                className="hover:text-primary transition-colors"
+              >
+                {s}
+              </Link>
+            ))}
           </div>
         </div>
         <div>
@@ -55,7 +58,7 @@ const Footer = () => (
             <a href="tel:+243829791356" className="flex items-center gap-2 hover:text-primary transition-colors">
               <Phone size={16} /> +243 82 97 91 356
             </a>
-            <a href="mailto:contact.gestimmodigital@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+            <a href="mailto:contact.gestimmodigital@gmail.com" className="flex items-start gap-2 break-all hover:text-primary transition-colors">
               <Mail size={16} /> contact.gestimmodigital@gmail.com
             </a>
             <span className="flex items-center gap-2">

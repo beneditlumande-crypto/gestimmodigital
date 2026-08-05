@@ -1,7 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { slugifyService } from "@/lib/services";
 import {
   Building2,
   Home,
@@ -116,6 +118,14 @@ const services = [
 ];
 
 const Services = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const el = document.getElementById(location.hash.slice(1));
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+  }, [location.hash]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -133,7 +143,7 @@ const Services = () => {
           </div>
 
           <Reveal>
-            <div className="max-w-6xl mx-auto mb-14 bg-card rounded-xl p-8 md:p-10 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+            <div id="conseil-strategique" className="scroll-mt-24 max-w-6xl mx-auto mb-14 bg-card rounded-xl p-8 md:p-10 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
               <div className="flex flex-col md:flex-row md:items-start gap-6">
                 <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
                   <Target size={28} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
@@ -182,7 +192,8 @@ const Services = () => {
             {services.map((s) => (
               <div
                 key={s.title}
-                className="bg-card rounded-xl p-8 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
+                id={slugifyService(s.title)}
+                className="scroll-mt-24 bg-card rounded-xl p-8 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
               >
                 <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary transition-colors">
                   <s.icon size={28} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
