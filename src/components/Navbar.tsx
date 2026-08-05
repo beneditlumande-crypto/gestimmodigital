@@ -20,20 +20,21 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border shadow-sm">
-      <div className="container px-4 flex items-center justify-between h-16 gap-2">
-        <Link to="/" className="flex items-center gap-2 min-w-0 shrink">
+      <div className="container px-4 flex items-center justify-between h-16 sm:h-20 gap-3">
+        <Link to="/" className="flex items-center gap-2.5 min-w-0 shrink">
           <img
             src={logoAsset.url}
             alt="Gestimmo Digital"
-            width={40}
-            height={40}
-            className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-full object-cover bg-white ring-1 ring-border"
+            width={56}
+            height={56}
+            className="h-11 w-11 sm:h-14 sm:w-14 shrink-0 rounded-full object-contain bg-white p-0.5 ring-1 ring-border"
           />
-          <div className="font-display text-base sm:text-xl font-bold text-primary flex flex-col leading-tight min-w-0">
+          <div className="font-display text-[15px] sm:text-xl font-bold text-primary flex flex-col leading-tight min-w-0">
             <span className="truncate">Gestimmo <span className="text-foreground">Digital</span></span>
             <span className="text-[10px] font-normal text-muted-foreground tracking-wide">Benedit</span>
           </div>
         </Link>
+
         <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
             <Link
