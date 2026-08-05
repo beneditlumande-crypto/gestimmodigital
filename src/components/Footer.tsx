@@ -1,14 +1,22 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
+import logoAsset from "@/assets/gestimmo-logo.jpg.asset.json";
 
 const Footer = () => (
   <footer className="bg-dark text-dark-foreground py-16">
     <div className="container px-4">
       <div className="grid md:grid-cols-4 gap-10">
         <div>
-          <h3 className="font-display text-xl font-bold mb-1">
-            Gestimmo <span className="text-primary">Digital</span>
-          </h3>
+          <div className="flex items-center gap-2.5 mb-1">
+            <img
+              src={logoAsset.url}
+              alt="Gestimmo Digital"
+              className="h-10 w-10 rounded-full object-contain bg-white"
+            />
+            <h3 className="font-display text-xl font-bold">
+              Gestimmo <span className="text-primary">Digital</span>
+            </h3>
+          </div>
           <p className="text-xs opacity-60 mb-4">Benedit</p>
           <p className="text-sm opacity-70 leading-relaxed">
             Votre partenaire de confiance en immobilier et marketing digital à Kinshasa.
