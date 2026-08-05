@@ -38,15 +38,15 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Services</h4>
           <div className="flex flex-col gap-2 text-sm opacity-70">
-            <span>Gestion immobilière</span>
-            <span>Location & Vente</span>
-            <span>Promotion immobilière</span>
-            <span>Création de sites web</span>
-            <span>Marketing digital</span>
-            <span>Analyse de données</span>
-            <span>Automatisation & IA</span>
-            <span>Référencement SEO</span>
-            <span>Applications web & API</span>
+            {SERVICE_OPTIONS.filter((s) => s !== "Autre").map((s) => (
+              <Link
+                key={s}
+                to={`/services#${slugifyService(s)}`}
+                className="hover:text-primary transition-colors"
+              >
+                {s}
+              </Link>
+            ))}
           </div>
         </div>
         <div>
