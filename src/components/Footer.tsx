@@ -6,13 +6,15 @@ import { SERVICE_OPTIONS, slugifyService } from "@/lib/services";
 const Footer = () => (
   <footer className="bg-dark text-dark-foreground py-16">
     <div className="container px-4">
-      <div className="grid md:grid-cols-4 gap-10">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5 mb-1">
             <img
               src={logoAsset.url}
               alt="Gestimmo Digital"
-              className="h-10 w-10 rounded-full object-contain bg-white"
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0 rounded-full object-cover bg-white"
             />
             <h3 className="font-display text-xl font-bold">
               Gestimmo <span className="text-primary">Digital</span>
@@ -56,7 +58,7 @@ const Footer = () => (
             <a href="tel:+243829791356" className="flex items-center gap-2 hover:text-primary transition-colors">
               <Phone size={16} /> +243 82 97 91 356
             </a>
-            <a href="mailto:contact.gestimmodigital@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+            <a href="mailto:contact.gestimmodigital@gmail.com" className="flex items-start gap-2 break-all hover:text-primary transition-colors">
               <Mail size={16} /> contact.gestimmodigital@gmail.com
             </a>
             <span className="flex items-center gap-2">
