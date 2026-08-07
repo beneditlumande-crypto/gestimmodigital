@@ -59,72 +59,84 @@ const services = [
   {
     icon: Building2,
     title: "Gestion des Biens Immobiliers",
+    image: imgGestion,
     description:
       "Nous assurons la gestion complète de vos propriétés : suivi des locataires, maintenance, encaissement des loyers et reporting régulier. Votre investissement entre de bonnes mains.",
   },
   {
     icon: Home,
     title: "Location et Vente de Biens",
+    image: imgLocation,
     description:
       "Grâce à notre réseau étendu et notre expertise du marché kinois, nous vous accompagnons dans la location ou la vente de vos biens immobiliers avec efficacité et transparence.",
   },
   {
     icon: Landmark,
     title: "Promotion Immobilière",
+    image: imgPromotion,
     description:
       "De la conception à la livraison, nous développons des projets immobiliers modernes qui répondent aux standards de qualité et aux besoins du marché local.",
   },
   {
     icon: Globe,
     title: "Création de Sites Web",
+    image: imgWeb,
     description:
       "Nous concevons des sites web professionnels, responsifs et optimisés pour le référencement, afin de donner à votre entreprise une présence en ligne à la hauteur de vos ambitions.",
   },
   {
     icon: TrendingUp,
     title: "Marketing Digital pour Entreprises",
+    image: imgMarketing,
     description:
       "Développez votre visibilité en ligne grâce à des stratégies digitales efficaces : réseaux sociaux, publicité Facebook & Google Ads, branding et acquisition de clients.",
   },
   {
     icon: BarChart3,
     title: "Analyse de Données",
+    image: imgData,
     description:
       "Transformez vos données en informations stratégiques grâce à des tableaux de bord interactifs, des rapports Power BI, Excel et Business Intelligence.",
   },
   {
     icon: Workflow,
     title: "Automatisation des Processus",
+    image: imgAuto,
     description:
       "Automatisez les tâches répétitives de votre entreprise : WhatsApp, formulaires, e-mails, notifications, CRM et workflows afin de gagner du temps et d'améliorer votre productivité.",
   },
   {
     icon: Bot,
     title: "Intelligence Artificielle & Agents IA",
+    image: imgIA,
     description:
       "Nous développons des agents IA, chatbots intelligents et assistants virtuels capables d'automatiser le service client, les ventes, les réponses automatiques et les processus métier.",
   },
   {
     icon: Search,
     title: "Référencement SEO",
+    image: imgSeo,
     description:
       "Optimisation complète de votre site web afin d'améliorer son positionnement sur Google, d'augmenter votre visibilité et d'attirer davantage de clients.",
   },
   {
     icon: CreditCard,
     title: "Intégration de Solutions de Paiement",
+    image: imgPaiement,
     description:
       "Intégration des moyens de paiement en ligne tels que M-Pesa, Airtel Money, Orange Money, Visa, Mastercard et autres solutions adaptées à votre activité.",
   },
   {
     icon: Plug,
     title: "Intégration d'API",
+    image: imgApi,
     description:
       "Connexion de votre application avec des services externes : SMS, e-mails, paiements, Google Maps, WhatsApp Business, ERP, CRM et autres API.",
   },
   {
     icon: LayoutDashboard,
     title: "Développement d'Applications Web",
+    image: imgAppWeb,
     description:
       "Création d'applications web modernes, rapides et sécurisées pour les entreprises, commerces, écoles, agences immobilières et startups.",
   },
