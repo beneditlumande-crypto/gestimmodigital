@@ -168,8 +168,18 @@ const Services = () => {
           </div>
 
           <Reveal>
-            <div id="conseil-strategique" className="scroll-mt-24 max-w-6xl mx-auto mb-14 bg-card rounded-xl p-8 md:p-10 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
-              <div className="flex flex-col md:flex-row md:items-start gap-6">
+            <div id="conseil-strategique" className="scroll-mt-24 max-w-6xl mx-auto mb-14 bg-card rounded-xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group">
+              <div className="relative aspect-[21/9] overflow-hidden">
+                <img
+                  src={imgConseil}
+                  alt="Conseil stratégique pour entreprises"
+                  loading="lazy"
+                  width={1024}
+                  height={640}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-8 md:p-10 flex flex-col md:flex-row md:items-start gap-6">
                 <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
                   <Target size={28} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
                 </div>
