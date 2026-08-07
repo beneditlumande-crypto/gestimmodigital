@@ -23,6 +23,19 @@ import {
   CalendarClock,
   FileText,
 } from "lucide-react";
+import imgConseil from "@/assets/services/conseil-strategique.jpg";
+import imgGestion from "@/assets/services/gestion-biens.jpg";
+import imgLocation from "@/assets/services/location-vente.jpg";
+import imgPromotion from "@/assets/services/promotion-immobiliere.jpg";
+import imgWeb from "@/assets/services/creation-sites-web.jpg";
+import imgMarketing from "@/assets/services/marketing-digital.jpg";
+import imgData from "@/assets/services/analyse-donnees.jpg";
+import imgAuto from "@/assets/services/automatisation.jpg";
+import imgIA from "@/assets/services/intelligence-artificielle.jpg";
+import imgSeo from "@/assets/services/seo.jpg";
+import imgPaiement from "@/assets/services/paiements.jpg";
+import imgApi from "@/assets/services/api.jpg";
+import imgAppWeb from "@/assets/services/applications-web.jpg";
 
 const strategyItems = [
   "Élaboration de stratégie d'entreprise",
