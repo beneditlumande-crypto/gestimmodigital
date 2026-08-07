@@ -22,16 +22,25 @@ const Navbar = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
       {/* Brand / Logo section */}
       <div className="border-b border-border">
-        <div className="container px-4 py-3 sm:py-4 flex items-center justify-center">
+        <div className="container px-4 py-3 sm:py-4 flex items-center justify-between md:justify-center gap-3">
           <Link to="/" className="flex items-center gap-3 min-w-0">
             <img
               src={logoAsset.url}
               alt="Gestimmo Digital"
-              width={56}
-              height={56}
-              className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 rounded-full object-contain bg-white p-0.5 ring-1 ring-border"
+              width={200}
+              height={200}
+              loading="eager"
+              decoding="async"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.dataset.fallback) {
+                  img.dataset.fallback = "1";
+                  img.src = "/favicon.png";
+                }
+              }}
+              className="h-11 w-11 sm:h-14 sm:w-14 shrink-0 rounded-full object-contain bg-white p-0.5 ring-1 ring-border"
             />
-            <div className="font-display text-lg sm:text-xl font-bold text-primary flex flex-col leading-tight min-w-0">
+            <div className="font-display text-base sm:text-xl font-bold text-primary flex flex-col leading-tight min-w-0">
               <span className="truncate">
                 Gestimmo <span className="text-foreground">Digital</span>
               </span>
@@ -40,12 +49,19 @@ const Navbar = () => {
               </span>
             </div>
           </Link>
+          <button
+            className="md:hidden shrink-0 text-foreground p-1"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
 
       {/* Navigation bar */}
-      <nav className="container px-4 h-12 sm:h-14 flex items-center">
-        <div className="hidden md:flex items-center justify-center gap-8 w-full">
+      <nav className="hidden md:block container px-4 h-12 sm:h-14 items-center">
+        <div className="flex items-center justify-center gap-8 w-full h-full">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -60,14 +76,8 @@ const Navbar = () => {
             </Link>
           ))}
         </div>
-        <button
-          className="md:hidden ml-auto text-foreground p-1"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
       </nav>
+
 
       {/* Mobile menu */}
       {open && (
