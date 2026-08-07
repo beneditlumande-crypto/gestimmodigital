@@ -218,13 +218,25 @@ const Services = () => {
               <div
                 key={s.title}
                 id={slugifyService(s.title)}
-                className="scroll-mt-24 bg-card rounded-xl p-8 border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
+                className="scroll-mt-24 bg-card rounded-xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
               >
-                <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary transition-colors">
-                  <s.icon size={28} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    loading="lazy"
+                    width={1024}
+                    height={640}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <h2 className="font-display font-bold text-foreground text-lg mb-3">{s.title}</h2>
-                <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
+                <div className="p-8">
+                  <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary transition-colors">
+                    <s.icon size={28} className="text-accent-foreground group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  <h2 className="font-display font-bold text-foreground text-lg mb-3">{s.title}</h2>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{s.description}</p>
+                </div>
               </div>
             ))}
           </div>
