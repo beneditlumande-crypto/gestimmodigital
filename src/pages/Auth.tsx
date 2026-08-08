@@ -1,3 +1,4 @@
+import Seo from "@/components/Seo";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -48,6 +49,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
+      <Seo title="Connexion | Gestimmo Digital" description="Espace réservé de Gestimmo Digital." path="/auth" noindex />
       <div className="w-full max-w-md bg-card border border-border rounded-xl p-8 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
