@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { Link, useLocation } from "react-router-dom";
@@ -153,6 +154,12 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Services immobiliers & digitaux à Kinshasa | Gestimmo Digital"
+        description="Découvrez nos services à Kinshasa : gestion et vente de biens, conseil stratégique, création de sites web, applications web, API, marketing digital, analyse de données, automatisation et IA."
+        path="/services"
+        keywords="services immobiliers Kinshasa, conseil stratégique RDC, création site web Kinshasa, application web, intégration API, marketing digital RDC, analyse de données, automatisation, intelligence artificielle, référencement SEO Kinshasa"
+      />
       <Navbar />
       <section className="pt-28 pb-20">
         <div className="container px-4">

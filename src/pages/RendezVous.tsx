@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { z } from "zod";
@@ -120,6 +121,12 @@ const RendezVous = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Prendre rendez-vous | Consultation stratégique à Kinshasa"
+        description="Réservez un rendez-vous ou une consultation stratégique avec Gestimmo Digital à Kinshasa pour vos projets immobiliers, web et de transformation digitale en RDC."
+        path="/rendez-vous"
+        keywords="rendez-vous agence Kinshasa, consultation stratégique RDC, conseil immobilier Kinshasa"
+      />
       <Navbar />
       <section className="pt-28 pb-20">
         <div className="container px-4">

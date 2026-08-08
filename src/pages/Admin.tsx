@@ -1,3 +1,4 @@
+import Seo from "@/components/Seo";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -198,6 +199,7 @@ const Admin = () => {
   if (checking) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
+      <Seo title="Administration | Gestimmo Digital" description="Espace réservé de Gestimmo Digital." path="/admin" noindex />
         <p className="text-muted-foreground text-sm">Chargement…</p>
       </div>
     );

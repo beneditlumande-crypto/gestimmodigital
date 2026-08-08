@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
@@ -81,6 +82,12 @@ const properties = [
 const Properties = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Biens immobiliers à Kinshasa | Gestimmo Digital"
+        description="Maisons, appartements et terrains à louer ou à vendre à Kinshasa (Gombe, Bandalungwa, Mont-Ngafula). Trouvez votre bien avec Gestimmo Digital en RDC."
+        path="/biens"
+        keywords="biens immobiliers Kinshasa, maison à louer Kinshasa, appartement à vendre Gombe, terrain RDC, agence immobilière Kinshasa"
+      />
       <Navbar />
       <section className="pt-28 pb-20">
         <div className="container px-4">
