@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { z } from "zod";
@@ -65,6 +66,12 @@ const Devis = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Demande de devis gratuit | Gestimmo Digital RDC"
+        description="Recevez un devis gratuit et personnalisé pour vos projets immobiliers, site web, application web, marketing digital ou automatisation à Kinshasa, RDC."
+        path="/devis"
+        keywords="devis gratuit site web Kinshasa, tarif marketing digital RDC, devis immobilier Kinshasa"
+      />
       <Navbar />
       <section className="pt-28 pb-20">
         <div className="container px-4">

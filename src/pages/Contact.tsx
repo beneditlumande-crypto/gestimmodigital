@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
@@ -59,6 +60,12 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Contact | Gestimmo Digital à Kinshasa, RDC"
+        description="Contactez Gestimmo Digital à Kinshasa : téléphone, WhatsApp +243 82 97 91 356 et formulaire en ligne pour vos projets immobiliers et digitaux en RDC."
+        path="/contact"
+        keywords="contact agence immobilière Kinshasa, WhatsApp Gestimmo Digital, contact marketing digital RDC"
+      />
       <Navbar />
       <section className="pt-28 pb-20">
         <div className="container px-4">

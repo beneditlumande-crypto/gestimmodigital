@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
 import heroImg from "@/assets/hero-realestate.jpg";
 import { Target, Eye, Award } from "lucide-react";
@@ -6,6 +7,12 @@ import { Target, Eye, Award } from "lucide-react";
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="À propos de Gestimmo Digital | Agence à Kinshasa, RDC"
+        description="Gestimmo Digital, agence immobilière et digitale basée à Kinshasa : notre mission, notre vision et notre expertise au service des particuliers et entreprises en RDC."
+        path="/a-propos"
+        keywords="agence immobilière Kinshasa, agence digitale RDC, Gestimmo Digital, à propos"
+      />
       <Navbar />
       <section className="pt-28 pb-20">
         <div className="container px-4">
