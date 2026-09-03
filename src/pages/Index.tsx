@@ -77,10 +77,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Gestimmo Digital | Immobilier & Solutions Digitales en RDC"
-        description="Gestimmo Digital accompagne les particuliers, entreprises et professionnels en RDC dans leurs projets immobiliers et leur transformation digitale."
+        title="Gestimmo Digital | Agence immobilière & marketing digital à Kinshasa, RDC"
+        description="Agence immobilière et de marketing digital à Kinshasa : gestion et vente de biens, création de sites web, applications web, automatisation, analyse de données et conseil stratégique en RDC."
         path="/"
-        keywords="immobilier Kinshasa, agence immobilière RDC, marketing digital Kinshasa, création de sites web, applications web, automatisation, analyse de données, conseil stratégique, Congo"
+        keywords="agence immobilière Kinshasa, gestion immobilière Kinshasa, marketing digital Kinshasa, création de sites web Kinshasa, applications web, automatisation, analyse de données, conseil stratégique Kinshasa, immobilier RDC, Congo"
         jsonLd={jsonLd}
       />
       <Navbar />
