@@ -29,15 +29,33 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "RealEstateAgent",
+      "@type": ["RealEstateAgent", "LocalBusiness"],
+      "@id": "https://www.gestimmodigital.com/#organization",
       "name": "Gestimmo Digital",
+      "alternateName": "Gestimmo Digital Kinshasa",
       "description": "Agence immobilière et marketing digital à Kinshasa, République démocratique du Congo",
       "image": "https://www.gestimmodigital.com/favicon.png",
       "logo": "https://www.gestimmodigital.com/favicon.png",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Kinshasa",
+        "addressRegion": "Kinshasa",
         "addressCountry": "CD"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": -4.3219, "longitude": 15.3119 },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+243829791356",
+        "email": "contact.gestimmodigital@gmail.com",
+        "contactType": "customer service",
+        "availableLanguage": ["fr"],
+        "areaServed": "CD"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "08:00",
+        "closes": "18:00"
       },
       "areaServed": [
         { "@type": "City", "name": "Kinshasa" },
