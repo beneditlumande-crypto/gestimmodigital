@@ -83,10 +83,10 @@ const Properties = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Biens immobiliers à Kinshasa | Gestimmo Digital"
-        description="Maisons, appartements et terrains à louer ou à vendre à Kinshasa (Gombe, Bandalungwa, Mont-Ngafula). Trouvez votre bien avec Gestimmo Digital en RDC."
+        title="Agence immobilière à Kinshasa — Biens à vendre et à louer | Gestimmo Digital"
+        description="Gestion immobilière à Kinshasa : maisons, appartements et terrains à louer ou à vendre (Gombe, Ngaliema, Bandalungwa, Mont-Ngafula). Agence immobilière de confiance en RDC."
         path="/biens"
-        keywords="biens immobiliers Kinshasa, maison à louer Kinshasa, appartement à vendre Gombe, terrain RDC, agence immobilière Kinshasa"
+        keywords="agence immobilière Kinshasa, gestion immobilière Kinshasa, biens immobiliers Kinshasa, maison à louer Kinshasa, appartement à vendre Gombe, terrain RDC"
       />
       <Navbar />
       <section className="pt-28 pb-20">
