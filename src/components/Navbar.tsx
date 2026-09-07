@@ -81,16 +81,16 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-card border-b border-border px-6 pb-4 flex flex-col gap-3">
+        <div className="md:hidden bg-card border-b border-border px-5 py-2 flex flex-col">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
               onClick={() => setOpen(false)}
-              className={`text-sm font-medium transition-colors ${
+              className={`text-base font-medium py-3 border-b border-border/60 last:border-b-0 transition-colors ${
                 location.pathname === item.href
                   ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  : "text-foreground/85 hover:text-primary"
               }`}
             >
               {item.label}
