@@ -60,16 +60,16 @@ const Navbar = () => {
       </div>
 
       {/* Navigation bar */}
-      <nav className="hidden md:block container px-4 h-12 sm:h-14 items-center">
-        <div className="flex items-center justify-center gap-8 w-full h-full">
+      <nav className="hidden md:block container px-4 h-14 items-center">
+        <div className="flex items-center justify-center gap-9 w-full h-full">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className={`text-sm font-body font-medium transition-colors ${
+              className={`relative text-[0.9rem] font-body font-medium tracking-wide transition-colors py-2 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:transition-transform after:duration-300 after:origin-left ${
                 location.pathname === item.href
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  ? "text-primary after:bg-primary after:scale-x-100"
+                  : "text-foreground/80 hover:text-primary after:bg-primary after:scale-x-0 hover:after:scale-x-100"
               }`}
             >
               {item.label}
