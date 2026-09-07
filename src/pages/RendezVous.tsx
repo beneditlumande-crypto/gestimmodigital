@@ -128,7 +128,7 @@ const RendezVous = () => {
         keywords="rendez-vous agence Kinshasa, consultation stratégique RDC, conseil immobilier Kinshasa"
       />
       <Navbar />
-      <section className="pt-28 pb-20">
+      <section className="pt-36 md:pt-44 pb-24">
         <div className="container px-4">
           <div className="text-center mb-12">
             <p className="text-primary font-semibold tracking-widest uppercase text-xs mb-2">Échangeons ensemble</p>

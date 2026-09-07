@@ -161,7 +161,7 @@ const Services = () => {
         keywords="services immobiliers Kinshasa, conseil stratégique RDC, création site web Kinshasa, application web, intégration API, marketing digital RDC, analyse de données, automatisation, intelligence artificielle, référencement SEO Kinshasa"
       />
       <Navbar />
-      <section className="pt-28 pb-20">
+      <section className="pt-36 md:pt-44 pb-24">
         <div className="container px-4">
           <div className="text-center mb-16">
             <p className="text-primary font-semibold tracking-widest uppercase text-xs mb-2">Nos expertises</p>
