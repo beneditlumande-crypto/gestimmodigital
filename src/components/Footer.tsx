@@ -37,13 +37,13 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Navigation</h4>
           <div className="flex flex-col gap-2 text-sm opacity-85">
-            <Link to="/" className="hover:text-primary transition-colors">Accueil</Link>
-            <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
-            <Link to="/biens" className="hover:text-primary transition-colors">Biens</Link>
-            <Link to="/a-propos" className="hover:text-primary transition-colors">À Propos</Link>
-            <Link to="/devis" className="hover:text-primary transition-colors">Devis</Link>
-            <Link to="/rendez-vous" className="hover:text-primary transition-colors">Rendez-vous</Link>
-            <Link to="/contact" className="hover:text-primary transition-colors">Contact</Link>
+            <Link to="/" className="hover:text-[hsl(var(--primary-glow))] transition-colors">Accueil</Link>
+            <Link to="/services" className="hover:text-[hsl(var(--primary-glow))] transition-colors">Services</Link>
+            <Link to="/biens" className="hover:text-[hsl(var(--primary-glow))] transition-colors">Biens</Link>
+            <Link to="/a-propos" className="hover:text-[hsl(var(--primary-glow))] transition-colors">À Propos</Link>
+            <Link to="/devis" className="hover:text-[hsl(var(--primary-glow))] transition-colors">Devis</Link>
+            <Link to="/rendez-vous" className="hover:text-[hsl(var(--primary-glow))] transition-colors">Rendez-vous</Link>
+            <Link to="/contact" className="hover:text-[hsl(var(--primary-glow))] transition-colors">Contact</Link>
 
           </div>
         </div>
@@ -54,7 +54,7 @@ const Footer = () => (
               <Link
                 key={s}
                 to={`/services#${slugifyService(s)}`}
-                className="hover:text-primary transition-colors"
+                className="hover:text-[hsl(var(--primary-glow))] transition-colors"
               >
                 {s}
               </Link>
@@ -64,10 +64,10 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Contact</h4>
           <div className="flex flex-col gap-3 text-sm opacity-85">
-            <a href="tel:+243829791356" className="flex items-center gap-2 hover:text-primary transition-colors">
+            <a href="tel:+243829791356" className="flex items-center gap-2 hover:text-[hsl(var(--primary-glow))] transition-colors">
               <Phone size={16} /> +243 82 97 91 356
             </a>
-            <a href="mailto:contact.gestimmodigital@gmail.com" className="flex items-start gap-2 break-all hover:text-primary transition-colors">
+            <a href="mailto:contact.gestimmodigital@gmail.com" className="flex items-start gap-2 break-all hover:text-[hsl(var(--primary-glow))] transition-colors">
               <Mail size={16} /> contact.gestimmodigital@gmail.com
             </a>
             <span className="flex items-center gap-2">
@@ -76,7 +76,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <div className="border-t border-[hsl(0,0%,100%,0.1)] mt-10 pt-6 text-center text-xs opacity-50">
+      <div className="border-t border-[hsl(0,0%,100%,0.1)] mt-10 pt-6 text-center text-xs opacity-60">
         © 2026 Gestimmo Digital. Tous droits réservés.
       </div>
     </div>
