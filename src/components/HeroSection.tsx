@@ -13,8 +13,8 @@ const HeroSection = () => {
           style={{ animation: "fade-in 1.2s ease-out forwards, float 16s ease-in-out infinite 1.2s" }}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-dark/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/85 via-dark/55 to-dark/90" />
+        <div className="absolute inset-0 bg-dark/25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/75 via-dark/35 to-dark/80" />
       </div>
       <div className="relative z-10 container text-center px-5 pt-36 pb-16 md:pt-40">
         <p className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--gold)/0.5)] bg-dark/40 px-4 py-1.5 text-[0.7rem] md:text-xs font-body font-semibold tracking-[0.16em] uppercase text-[hsl(45,80%,72%)] mb-7 animate-fade-in-up">
