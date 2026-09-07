@@ -36,7 +36,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 className="font-display font-semibold mb-4">Navigation</h4>
-          <div className="flex flex-col gap-2 text-sm opacity-70">
+          <div className="flex flex-col gap-2 text-sm opacity-85">
             <Link to="/" className="hover:text-primary transition-colors">Accueil</Link>
             <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
             <Link to="/biens" className="hover:text-primary transition-colors">Biens</Link>
@@ -49,7 +49,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 className="font-display font-semibold mb-4">Services</h4>
-          <div className="flex flex-col gap-2 text-sm opacity-70">
+          <div className="flex flex-col gap-2 text-sm opacity-85">
             {SERVICE_OPTIONS.filter((s) => s !== "Autre").map((s) => (
               <Link
                 key={s}
@@ -63,7 +63,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 className="font-display font-semibold mb-4">Contact</h4>
-          <div className="flex flex-col gap-3 text-sm opacity-70">
+          <div className="flex flex-col gap-3 text-sm opacity-85">
             <a href="tel:+243829791356" className="flex items-center gap-2 hover:text-primary transition-colors">
               <Phone size={16} /> +243 82 97 91 356
             </a>
