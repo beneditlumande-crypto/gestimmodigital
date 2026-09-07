@@ -4,24 +4,33 @@ import logoAsset from "@/assets/gestimmo-logo.jpg.asset.json";
 import { SERVICE_OPTIONS, slugifyService } from "@/lib/services";
 
 const Footer = () => (
-  <footer className="bg-dark text-dark-foreground py-16">
+  <footer className="bg-dark text-dark-foreground pt-16 pb-10">
     <div className="container px-4">
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="h-px w-24 rule-gold mb-10" />
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
         <div>
-          <div className="flex items-center gap-2.5 mb-1">
+          <div className="flex items-center gap-3 mb-2">
             <img
               src={logoAsset.url}
               alt="Gestimmo Digital"
-              width={40}
-              height={40}
-              className="h-12 w-12 shrink-0 rounded-full object-contain bg-white p-0.5"
+              width={56}
+              height={56}
+              loading="lazy"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.dataset.fallback) {
+                  img.dataset.fallback = "1";
+                  img.src = "/favicon.png";
+                }
+              }}
+              className="h-14 w-14 shrink-0 rounded-full object-contain bg-[hsl(0,0%,100%)] p-1 ring-1 ring-[hsl(0,0%,100%,0.25)]"
             />
-            <h3 className="font-display text-xl font-bold">
-              Gestimmo <span className="text-primary">Digital</span>
+            <h3 className="font-display text-xl font-bold leading-tight">
+              Gestimmo <span className="text-[hsl(var(--primary-glow))]">Digital</span>
             </h3>
           </div>
-          <p className="text-xs opacity-60 mb-4">Benedit</p>
-          <p className="text-sm opacity-70 leading-relaxed">
+          <p className="text-xs opacity-70 mb-4 tracking-wide">Benedit</p>
+          <p className="text-sm opacity-85 leading-relaxed">
             Votre partenaire de confiance en immobilier et marketing digital à Kinshasa.
           </p>
         </div>
