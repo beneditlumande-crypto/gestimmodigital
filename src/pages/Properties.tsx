@@ -89,7 +89,7 @@ const Properties = () => {
         keywords="agence immobilière Kinshasa, gestion immobilière Kinshasa, biens immobiliers Kinshasa, maison à louer Kinshasa, appartement à vendre Gombe, terrain RDC"
       />
       <Navbar />
-      <section className="pt-28 pb-20">
+      <section className="pt-36 md:pt-44 pb-24">
         <div className="container px-4">
           <div className="text-center mb-16">
             <p className="text-primary font-semibold tracking-widest uppercase text-xs mb-2">Immobilier</p>

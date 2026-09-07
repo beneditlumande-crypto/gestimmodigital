@@ -19,9 +19,9 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-xl border-b border-border shadow-card">
       {/* Brand / Logo section */}
-      <div className="border-b border-border">
+      <div className="border-b border-border/70">
         <div className="container px-4 py-3 sm:py-4 flex items-center justify-between md:justify-center gap-3">
           <Link to="/" className="flex items-center gap-3 min-w-0">
             <img
@@ -60,16 +60,16 @@ const Navbar = () => {
       </div>
 
       {/* Navigation bar */}
-      <nav className="hidden md:block container px-4 h-12 sm:h-14 items-center">
-        <div className="flex items-center justify-center gap-8 w-full h-full">
+      <nav className="hidden md:block container px-4 h-14 items-center">
+        <div className="flex items-center justify-center gap-9 w-full h-full">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className={`text-sm font-body font-medium transition-colors ${
+              className={`relative text-[0.9rem] font-body font-medium tracking-wide transition-colors py-2 after:absolute after:left-0 after:right-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:transition-transform after:duration-300 after:origin-left ${
                 location.pathname === item.href
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  ? "text-primary after:bg-primary after:scale-x-100"
+                  : "text-foreground/80 hover:text-primary after:bg-primary after:scale-x-0 hover:after:scale-x-100"
               }`}
             >
               {item.label}
@@ -81,16 +81,16 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-card border-b border-border px-6 pb-4 flex flex-col gap-3">
+        <div className="md:hidden bg-card border-b border-border px-5 py-2 flex flex-col">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
               onClick={() => setOpen(false)}
-              className={`text-sm font-medium transition-colors ${
+              className={`text-base font-medium py-3 border-b border-border/60 last:border-b-0 transition-colors ${
                 location.pathname === item.href
                   ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  : "text-foreground/85 hover:text-primary"
               }`}
             >
               {item.label}
