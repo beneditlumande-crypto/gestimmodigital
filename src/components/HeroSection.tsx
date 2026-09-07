@@ -4,24 +4,24 @@ import heroImg from "@/assets/hero-realestate.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[92vh] md:min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[86vh] md:min-h-[92vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroImg}
           alt="Gestimmo Digital - Immobilier à Kinshasa"
-          className="w-full h-full object-cover scale-110 animate-fade-in"
-          style={{ animation: "fade-in 1.2s ease-out forwards, float 14s ease-in-out infinite 1.2s" }}
+          className="w-full h-full object-cover scale-105 animate-fade-in"
+          style={{ animation: "fade-in 1.2s ease-out forwards, float 16s ease-in-out infinite 1.2s" }}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-dark/92 via-dark/75 to-primary/40" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,hsl(var(--dark)/0.75)_100%)]" />
+        <div className="absolute inset-0 bg-dark/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/85 via-dark/55 to-dark/90" />
       </div>
-      <div className="relative z-10 container text-center px-5 pt-36 pb-20 md:pt-44">
-        <p className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--gold)/0.45)] px-4 py-1.5 text-[0.72rem] md:text-xs font-body font-medium tracking-[0.22em] uppercase text-[hsl(var(--gold))] mb-7 animate-fade-in-up">
+      <div className="relative z-10 container text-center px-5 pt-36 pb-16 md:pt-40">
+        <p className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--gold)/0.5)] bg-dark/40 px-4 py-1.5 text-[0.7rem] md:text-xs font-body font-semibold tracking-[0.16em] uppercase text-[hsl(45,80%,72%)] mb-7 animate-fade-in-up">
           Immobilier &amp; Marketing Digital
         </p>
-        <h1 className="text-[2.1rem] sm:text-5xl lg:text-7xl font-display font-bold mb-6 animate-fade-in-up text-dark-foreground leading-[1.08] max-w-4xl mx-auto text-balance">
-          Votre partenaire en <span className="text-gradient-blue">Immobilier</span> &amp; Solutions Digitales
+        <h1 className="text-[2.1rem] sm:text-5xl lg:text-[4.2rem] font-display font-bold mb-6 animate-fade-in-up text-dark-foreground leading-[1.08] max-w-4xl mx-auto text-balance drop-shadow-[0_2px_20px_rgba(0,0,0,0.45)]">
+          Votre partenaire en <span className="text-[hsl(210,100%,72%)]">Immobilier</span> &amp; Solutions Digitales
         </h1>
         <div className="h-px w-20 rule-gold mx-auto mb-7" />
         <p className="text-base md:text-xl text-dark-foreground/90 max-w-2xl mx-auto mb-10 animate-fade-in-up leading-relaxed">
