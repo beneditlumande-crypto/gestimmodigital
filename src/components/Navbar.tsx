@@ -19,9 +19,9 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-xl border-b border-border shadow-card">
       {/* Brand / Logo section */}
-      <div className="border-b border-border">
+      <div className="border-b border-border/70">
         <div className="container px-4 py-3 sm:py-4 flex items-center justify-between md:justify-center gap-3">
           <Link to="/" className="flex items-center gap-3 min-w-0">
             <img
