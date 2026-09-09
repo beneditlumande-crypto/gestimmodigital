@@ -93,10 +93,10 @@ const Footer = () => {
                 className="h-14 w-14 shrink-0 rounded-full object-contain bg-white p-1 ring-1 ring-white/25"
               />
               <div>
-                <h3 className="font-display text-xl font-bold leading-tight">
+                <h3 className="font-display text-xl font-bold leading-tight text-white">
                   Gestimmo <span className="text-[hsl(var(--primary-glow))]">Digital</span>
                 </h3>
-                <p className="text-xs opacity-70 tracking-wide mt-0.5">Benedit</p>
+                <p className="text-xs text-white/70 tracking-wide mt-0.5">Benedit</p>
               </div>
             </div>
             <p className="text-sm opacity-85 leading-relaxed max-w-xs">
@@ -202,7 +202,7 @@ const Footer = () => {
         <div className="mt-12 sm:mt-14 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10">
           <div className="grid md:grid-cols-2 gap-6 items-center">
             <div>
-              <h4 className="font-display text-lg sm:text-xl font-semibold mb-2">
+              <h4 className="font-display text-lg sm:text-xl font-semibold mb-2 text-white">
                 Recevez nos meilleures opportunités
               </h4>
               <p className="text-sm opacity-80 leading-relaxed">
