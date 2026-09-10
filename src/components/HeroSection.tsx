@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import kinshasaHero from "@/assets/kinshasa-fleuve-congo-hero.jfif.asset.json";
+import heroImage from "@/assets/hero-gratte-ciels.jpg.asset.json";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-[86vh] md:min-h-[92vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={kinshasaHero.url}
-          alt="Vue aérienne de Kinshasa et du fleuve Congo"
+          src={heroImage.url}
+          alt="Gratte-ciels modernes, symbole d’immobilier premium et de solutions digitales"
           className="h-full w-full object-cover object-center animate-fade-in"
           loading="eager"
           fetchPriority="high"
