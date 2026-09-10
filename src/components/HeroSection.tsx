@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import heroImage from "@/assets/hero-gratte-ciels.jpg.asset.json";
+import heroImage from "@/assets/hero-gratte-ciels.jpg";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-[86vh] md:min-h-[92vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src={heroImage.url}
+          src={heroImage}
           alt="Gratte-ciels modernes, symbole d’immobilier premium et de solutions digitales"
           className="h-full w-full object-cover object-center animate-fade-in"
           loading="eager"
