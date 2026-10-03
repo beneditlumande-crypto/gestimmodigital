@@ -1,0 +1,17 @@
+# Gestimmo Digital
+
+> Agence immobilière et de marketing digital à Kinshasa, République démocratique du Congo (RDC).
+
+Gestimmo Digital accompagne particuliers, professionnels et entreprises dans leurs projets immobiliers (vente, location, gestion de biens à Kinshasa) et leur transformation digitale : création de sites web, applications web, marketing digital, analyse de données, automatisation, IA et conseil stratégique.
+
+Contact : contact.gestimmodigital@gmail.com — WhatsApp : +243 82 97 91 356 — Kinshasa, RDC.
+
+## Pages
+
+- [Accueil](/): Présentation de l'agence et de ses services.
+- [Services](/services): Les 13 services immobiliers et digitaux de l'agence.
+- [Biens immobiliers](/biens): Biens à vendre et à louer à Kinshasa.
+- [À propos](/a-propos): L'équipe, la mission et les valeurs de Gestimmo Digital.
+- [Contact](/contact): Formulaire de contact et coordonnées.
+- [Demande de devis](/devis): Obtenir un devis gratuit pour un projet.
+- [Prendre rendez-vous](/rendez-vous): Réserver une consultation stratégique.

@@ -83,7 +83,7 @@ const Properties = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Agence immobilière à Kinshasa — Biens à vendre et à louer | Gestimmo Digital"
+        title="Biens immobiliers à Kinshasa | Gestimmo Digital"
         description="Gestion immobilière à Kinshasa : maisons, appartements et terrains à louer ou à vendre (Gombe, Ngaliema, Bandalungwa, Mont-Ngafula). Agence immobilière de confiance en RDC."
         path="/biens"
         keywords="agence immobilière Kinshasa, gestion immobilière Kinshasa, biens immobiliers Kinshasa, maison à louer Kinshasa, appartement à vendre Gombe, terrain RDC"
