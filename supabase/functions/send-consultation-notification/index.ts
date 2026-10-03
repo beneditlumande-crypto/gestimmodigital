@@ -30,7 +30,7 @@ Deno.serve(async (req) => {
       !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
       !time || time.length > 20 ||
       !payerNumber || payerNumber.length > 30 ||
-      !proofPath || proofPath.length > 300 ||
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|jpeg|png|pdf)$/i.test(proofPath) ||
       comment.length > 2000
     ) {
       return new Response(JSON.stringify({ error: "Données invalides" }), {
@@ -44,6 +44,23 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
       { auth: { persistSession: false } },
     );
+
+    // Only accept a freshly uploaded, not-yet-claimed proof file
+    const { data: objs } = await supabase.storage
+      .from("payment-proofs")
+      .list("", { search: proofPath, limit: 1 });
+    const obj = objs?.find((o) => o.name === proofPath);
+    const fresh = obj?.created_at && Date.now() - new Date(obj.created_at).getTime() < 30 * 60 * 1000;
+    const { count: used } = await supabase
+      .from("consultation_payments")
+      .select("id", { count: "exact", head: true })
+      .eq("proof_path", proofPath);
+    if (!obj || !fresh || (used ?? 0) > 0) {
+      return new Response(JSON.stringify({ error: "Preuve de paiement invalide" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const { error: dbError } = await supabase.from("consultation_payments").insert({
       name,

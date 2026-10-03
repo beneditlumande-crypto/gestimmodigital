@@ -178,7 +178,12 @@ const Admin = () => {
 
   const exportCsv = () => {
     const cols = COLUMNS[tab];
-    const escape = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const escape = (v: unknown) => {
+      let s = String(v ?? "");
+      // Neutralize spreadsheet formulas (CSV injection)
+      if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
+      return `"${s.replace(/"/g, '""')}"`;
+    };
     const csv = [
       cols.map((c) => escape(c.label)).join(","),
       ...filtered.map((r) => cols.map((c) => escape(r[c.key])).join(",")),
